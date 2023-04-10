@@ -50,7 +50,7 @@ export const LoginPage = () => {
   return (
     <>
       <div className="flex items-center justify-center w-screen bg-white h-screen">
-        <div className="border-[1px] border-dashed border-slate-300 rounded-md bg-white drop-shadow-xl min-w-[33%] py-4">
+        <div className="border-[1px] border-dashed border-slate-300 rounded-md bg-white drop-shadow-xl min-w-[75%] sm:min-w-[50%] lg:min-w-[33%] py-4">
           <div className="text-center mb-4 px-4 text-black">Login or Sign up</div>
           <Divider dashed />
           <div className="my-4 px-4 text-black">Welcome to Ngon</div>
