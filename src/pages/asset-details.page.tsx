@@ -77,9 +77,11 @@ export const AssetDetails = () => {
   };
 
   if (isGetAssetByIdLoading) {
-    return <div className="flex gap-6 w-full p-8 bg-white text-lg items-center justify-center">
-      <ImSpinner8 className="animate-spin"/>
-    </div>;
+    return (
+      <div className="flex gap-6 w-full p-8 bg-white text-lg items-center justify-center">
+        <ImSpinner8 className="animate-spin" />
+      </div>
+    );
   }
 
   return (
@@ -116,7 +118,9 @@ export const AssetDetails = () => {
               <Divider type="vertical" />
               <div className="flex items-center mx-2 text-gray-700">
                 <AiOutlineComment />
-                <span className="ml-2 text-xs">{assetDetails?.comments?.length || 0}</span>
+                <span className="ml-2 text-xs">
+                  {assetDetails?.comments?.length || 0}
+                </span>
               </div>
             </div>
           </div>
@@ -172,12 +176,8 @@ export const AssetDetails = () => {
           <div className="my-1 text-gray-500 flex items-center">
             <TiTags size={16} />
             <span className="ml-2">
-              {assetDetails?.category?.map((category: ICategory) => {
-                return (
-                  <Tag className="text-white bg-slate-600">
-                    {category.label}
-                  </Tag>
-                );
+              {assetDetails?.tags?.map((tag: string) => {
+                return <Tag className="text-white bg-slate-600">{tag}</Tag>;
               })}
             </span>
           </div>
@@ -251,36 +251,48 @@ export const AssetDetails = () => {
         <div className="mt-4">
           <Tabs
             items={[
-              {
-                key: "reviews",
-                label: (
-                  <div className="mx-4">
-                    Reviews
-                    <Badge
-                      count={assetDetails?.reviews?.length}
-                      showZero
-                      color="primary"
-                      className="mx-3"
-                    />
-                  </div>
-                ),
-                children: <Reviews reviews={assetDetails?.reviews || []} />,
-              },
-              {
-                key: "comments",
-                label: (
-                  <div className="mx-4">
-                    Comments
-                    <Badge
-                      count={assetDetails?.comments?.length}
-                      showZero
-                      color="primary"
-                      className="mx-3"
-                    />
-                  </div>
-                ),
-                children: <Comments comments={assetDetails?.comments || []} />,
-              },
+              ...(assetDetails?.reviews && assetDetails?.reviews?.length > 0
+                ? [
+                    {
+                      key: "reviews",
+                      label: (
+                        <div className="mx-4">
+                          Reviews
+                          <Badge
+                            count={assetDetails?.reviews?.length}
+                            showZero
+                            color="primary"
+                            className="mx-3"
+                          />
+                        </div>
+                      ),
+                      children: (
+                        <Reviews reviews={assetDetails?.reviews || []} />
+                      ),
+                    },
+                  ]
+                : []),
+              ...(assetDetails?.comments && assetDetails?.comments?.length > 0
+                ? [
+                    {
+                      key: "comments",
+                      label: (
+                        <div className="mx-4">
+                          Comments
+                          <Badge
+                            count={assetDetails?.comments?.length}
+                            showZero
+                            color="primary"
+                            className="mx-3"
+                          />
+                        </div>
+                      ),
+                      children: (
+                        <Comments comments={assetDetails?.comments || []} />
+                      ),
+                    },
+                  ]
+                : []),
             ]}
           />
         </div>

@@ -37,12 +37,11 @@ export const ProfilePage = () => {
   ];
 
   return (
-    <div className="h-screen w-screen bg-white">
-      <Header />
-      <div className="bg-slate-50 w-full h-full pt-[88px] text-black overflow-auto">
+    <div className="h-screen w-full bg-white">
+      <div className="bg-slate-50 w-full h-full text-black overflow-auto">
         <div className="p-4">
           <Row gutter={[12, 12]}>
-            <Col span={16}>
+            <Col span={18}>
               <div>
                 <Tabs
                   defaultActiveKey="uploads"
@@ -51,7 +50,7 @@ export const ProfilePage = () => {
                 />
               </div>
             </Col>
-            <Col span={8}>
+            <Col span={6}>
               <div className="flex flex-col items-center">
                 <Avatar
                   src="https://picsum.photos/500/300?random=1"

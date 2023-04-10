@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const version = 'v1';
+
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000/v1",
+  baseURL: `${import.meta.env.VITE_NOGON_API_URL}/${version}`,
 });
 
 axiosInstance.interceptors.request.use((config) => {
