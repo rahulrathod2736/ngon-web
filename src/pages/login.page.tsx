@@ -69,7 +69,7 @@ export const LoginPage = () => {
             <Form.Item label="Password">
               <TooltipInputField message={errors.password || null}>
                 <Input.Password
-                  placeholder="password"
+                  placeholder="Password"
                   name="password"
                   value={values.password}
                   status={errors.password ? "error" : ""}
