@@ -19,6 +19,7 @@ import { AssetUploadPage } from "./assets-upload.page";
 import { AssetsPage } from "./assets.page";
 import { DashboardPage } from "./dashboard.page";
 import { AssetDetails } from "./asset-details.page";
+import { ProfilePage } from "./profile.page";
 
 const { Sider, Content, Header: AntdHeader } = AntdLayout;
 
@@ -111,6 +112,7 @@ export const HomePage = () => {
                 />
                 <Route path={"/assets/:id"} element={<AssetDetails />} />
                 <Route path={STRINGS.BASE_PATH} element={<AssetsPage />} />
+                <Route path={STRINGS.PROFILE_PATH} element={<ProfilePage />} />
               </Routes>
             </div>
           </Content>

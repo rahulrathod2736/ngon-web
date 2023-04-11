@@ -137,7 +137,7 @@ export const RegisterPage = () => {
               <TooltipInputField
                 message={errors.password ? errors.password : null}
               >
-                <Input
+                <Input.Password
                   placeholder="Password"
                   disabled={isVerificationCodeSent}
                   name="password"
@@ -151,7 +151,7 @@ export const RegisterPage = () => {
               <TooltipInputField
                 message={errors.confirmPassword ? errors.confirmPassword : null}
               >
-                <Input
+                <Input.Password
                   placeholder="Confirm Password"
                   disabled={isVerificationCodeSent}
                   name="confirmPassword"

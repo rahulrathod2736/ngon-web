@@ -30,14 +30,6 @@ function App() {
         }
       />
       <Route
-        path={STRINGS.PROFILE_PATH}
-        element={
-          <PrivateRoutes>
-            <ProfilePage />
-          </PrivateRoutes>
-        }
-      />
-      <Route
         path={"/*"}
         element={
           <PrivateRoutes>
