@@ -22,9 +22,9 @@ const ProfilePopover = ({ profile }: any) => {
     <div className="">
       <div className="px-4 py-2 flex flex-col">
         <span>
-          {profile.firstName} {profile.lastName}
+          {profile?.firstName} {profile?.lastName}
         </span>
-        <span className="text-slate-400">{profile.email}</span>
+        <span className="text-slate-400">{profile?.email}</span>
       </div>
       <Divider dashed />
 
@@ -90,8 +90,7 @@ export const Header = () => {
             <Avatar
               className="cursor-pointer"
               size={35}
-              src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=100"
-            />
+            >{userProfile?.firstName?.[0] || ""}</Avatar>
           </Popover>
         </div>
       </div>

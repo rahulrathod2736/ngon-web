@@ -9,6 +9,9 @@ interface IAuthState {
   isGetAssetsLoading: boolean;
   isGetAssetsError: string | null;
   assetDetails: INgonAsset | null;
+  isGetModelUrlLoading: boolean;
+  isGetModelUrlError: string | null;
+  assetModelUrl: string | null;
   isGetAssetByIdLoading: boolean;
   isGetAssetByIdError: string | null;
   isLikeUnlikeLoading: boolean;
@@ -24,6 +27,9 @@ const initialState: IAuthState = {
   isGetAssetsLoading: false,
   isGetAssetsError: null,
   assetDetails: null,
+  isGetModelUrlLoading: false,
+  isGetModelUrlError: null,
+  assetModelUrl: null,
   isGetAssetByIdLoading: false,
   isGetAssetByIdError: null,
   isLikeUnlikeLoading: false,
@@ -56,6 +62,27 @@ export const getAssetDetailById = createAsyncThunk<
   try {
     const resp = await axiosInstance.get(
       `${apiRoutes.getAssetDetails.replace(":assetId", args.id)}`
+    );
+    return resp.data;
+  } catch (err: any) {
+    if (!err.response) {
+      throw err;
+    }
+    return rejectWithValue(err.response.data);
+  }
+});
+
+export const getModelUrl = createAsyncThunk<
+  Record<string, any>,
+  Record<string, any>
+>("asset/getModelUrl", async (args, { getState, rejectWithValue }) => {
+  try {
+    const resp = await axiosInstance.post(
+      `${apiRoutes.assetMedia.replace(":assetId", args.id)}`,
+        {
+          "type": "model",
+          "action": "download"
+        }
     );
     return resp.data;
   } catch (err: any) {
@@ -142,6 +169,23 @@ const slice = createSlice({
         state.assets = data;
       })
       .addCase(getAssets.rejected, (state, action: any) => {
+        console.log(state, action, "rejected");
+        message.error(action.payload.message);
+        state.isGetAssetsLoading = false;
+        state.isGetAssetsError = action.payload.message;
+      });
+    builder
+    .addCase(getModelUrl.pending, (state, action) => {
+        state.isGetAssetsLoading = true;
+        state.isGetAssetsError = null;
+      })
+      .addCase(getModelUrl.fulfilled, (state, action) => {
+        console.log(state, action, "fulfilled");
+        const { data } = action.payload || {};
+        state.isGetAssetsLoading = false;
+        state.assetModelUrl = data?.url || '';
+      })
+      .addCase(getModelUrl.rejected, (state, action: any) => {
         console.log(state, action, "rejected");
         message.error(action.payload.message);
         state.isGetAssetsLoading = false;

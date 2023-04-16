@@ -17,7 +17,7 @@ export const NgonAssetCard = ({ asset }: IProps) => {
     <div className="bg-white drop-shadow-2xl rounded-md mb-4">
       <div className="h-36 relative">
         <img
-          src="https://picsum.photos/500/300?random=1"
+          src={asset?.image || "https://picsum.photos/500/300?random=1"}
           className="w-full h-36 object-cover rounded-t-md"
         />
         {asset?.user?._id === userProfile?._id ? (

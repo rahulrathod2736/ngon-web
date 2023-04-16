@@ -41,6 +41,7 @@ export interface IComment {
 export interface INgonAsset {
   _id: string;
   name: string;
+  image: string;
   description: string;
   category: ICategory[];
   tags: string[];
@@ -58,4 +59,6 @@ export interface INgonAsset {
   };
   createdAt: string;
   updatedAt: string;
+  modelUrl?: string;
+  priceModel?: "free" | "paid";
 }
