@@ -5,7 +5,6 @@ import { FiEdit } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { getAssets } from "../redux/assetReducer";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
-import { AssetOnboardingUpload } from "./asset-onboarding";
 import { CreateNGONAssets } from "./create-ngon-assets";
 import { NgonAssetCard } from "./ngon-asset-card";
 

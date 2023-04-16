@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { HomePage } from "./pages/home.page";
-import { AssetUploadPage } from "./pages/assets-upload.page";
 import { STRINGS } from "./utils/constants/strings";
 import { DiscoverPage } from "./pages/discover.page";
 import { LoginPage } from "./pages/login.page";

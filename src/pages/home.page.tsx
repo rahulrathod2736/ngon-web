@@ -15,7 +15,6 @@ import { getCategories } from "../redux/userReducer";
 import { DashboardMenus } from "../utils/constants/menus";
 import { STRINGS } from "../utils/constants/strings";
 import { AssetOnboadingDetails } from "./asset-onboarding-details.page";
-import { AssetUploadPage } from "./assets-upload.page";
 import { AssetsPage } from "./assets.page";
 import { DashboardPage } from "./dashboard.page";
 import { AssetDetails } from "./asset-details.page";
