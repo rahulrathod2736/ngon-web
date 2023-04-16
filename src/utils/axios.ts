@@ -14,3 +14,21 @@ axiosInstance.interceptors.request.use((config) => {
   config.headers["Content-Type"] = "application/json";
   return config;
 });
+
+axiosInstance.interceptors.response.use(
+    function (response) {
+      return response;
+    },
+    function (er) {
+      if (axios.isAxiosError(er)) {
+        if (er.response) {
+          if (er.response.status == 401) {
+            localStorage.removeItem("ngon:token");
+            window.location.href = "/login" // <-- navigate
+          }
+        }
+      }
+
+      return Promise.reject(er);
+    }
+);

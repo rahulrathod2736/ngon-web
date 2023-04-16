@@ -153,7 +153,7 @@ const slice = createSlice({
         console.log(state, action, "rejected");
         message.error(action.payload.message);
         state.isLoginLoading = false;
-        state.isLoginSuccess = action?.payload?.message || "";
+        state.isLoginError = action?.payload?.message || "";
       });
   },
 });
