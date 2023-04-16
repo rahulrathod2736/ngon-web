@@ -32,6 +32,7 @@ export const ModelUpload = ({id}: { id: string }) => {
             const model = downloadResp?.data?.data?.url || '';
             if (model) {
                 setModelUrl(model)
+            }
         } catch (err) {
             console.log(err);
         } finally {
