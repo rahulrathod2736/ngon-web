@@ -34,32 +34,6 @@ const initialState: IAuthState = {
   isAssetUpdateStatusError: null,
 };
 
-export const uploadAssetModel = createAsyncThunk<
-  Record<string, any>,
-  Record<string, any>
->("asset/uploadAssetModel", async (args, { getState, rejectWithValue }) => {
-  try {
-    console.log("args", args);
-    const formData = new FormData();
-    formData.append("file", args.file);
-    const resp = await axiosInstance.post(
-      apiRoutes.uploadAssetModel,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    return resp.data;
-  } catch (err: any) {
-    if (!err.response) {
-      throw err;
-    }
-    return rejectWithValue(err.response.data);
-  }
-});
-
 export const assetOnboardingDetails = createAsyncThunk<
   Record<string, any>,
   Record<string, any>
@@ -159,24 +133,6 @@ const slice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(uploadAssetModel.pending, (state) => {
-        console.log(state, "pending");
-        state.isAssetModelUploadLoading = true;
-        state.isAssetModelUploadError = null;
-      })
-      .addCase(uploadAssetModel.fulfilled, (state, action) => {
-        console.log(state, action, "fulfilled");
-        const { data } = action.payload || {};
-        state.isAssetModelUploadLoading = false;
-        state.isAssetModelUploadSuccess = data;
-      })
-      .addCase(uploadAssetModel.rejected, (state, action: any) => {
-        console.log(state, action, "rejected");
-        message.error(action.payload.message);
-        state.isAssetModelUploadLoading = false;
-        state.isAssetModelUploadError = action.payload.message;
-      });
     builder
       .addCase(assetOnboardingDetails.pending, (state) => {
         console.log(state, "pending");

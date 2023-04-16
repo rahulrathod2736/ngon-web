@@ -6,6 +6,7 @@ export const apiRoutes = {
   getCategories: "/categories",
   uploadAssetModel: "/asset-onboarding/upload",
   assets: "/assets",
+  assetMedia: "assets/:assetId/media",
   getAssetDetails: "/assets/:assetId",
   likeUnlikeAssets: "/assets/like/:assetId",
   submitReviews: "/assets/review/:assetId",
