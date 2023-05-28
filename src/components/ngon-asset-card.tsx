@@ -5,16 +5,17 @@ import { RootState, useAppSelector } from "../redux/store";
 
 interface IProps {
   asset: INgonAsset;
+  className?: string;
 }
 
-export const NgonAssetCard = ({ asset }: IProps) => {
+export const NgonAssetCard = ({ asset, className }: IProps) => {
   const { userProfile } = useAppSelector((state: RootState) => state.user);
   const navigate = useNavigate();
   const navigateToEdit = (id: string) => {
     navigate("/asset-onboarding/details/" + id);
   };
   return (
-    <div className="bg-white drop-shadow-2xl rounded-md mb-4">
+    <div className={`bg-white drop-shadow-2xl rounded-md mb-4 ${className}`}>
       <div className="h-36 relative">
         <img
           src={asset?.image || "https://picsum.photos/500/300?random=1"}

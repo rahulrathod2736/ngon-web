@@ -3,11 +3,20 @@ import { useFormik } from "formik";
 import { Button, Col, Divider, Form, Input, Row } from "antd";
 import TooltipInputField from "../components/tooltipInputField/tooltipInputField";
 import * as Yup from "yup";
-import { registerUser, resetAuthentication, verifyCode } from "../redux/authReducer";
+import {
+  openGlobalModal,
+  registerUser,
+  resetAuthentication,
+  verifyCode,
+} from "../redux/authReducer";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { useNavigate } from "react-router-dom";
 
-export const RegisterPage = () => {
+export const RegisterPage = ({
+  isFullScreen = true,
+}: {
+  isFullScreen?: boolean;
+}) => {
   const [verificationCode, setVerificationCode] = useState("");
   const dispatch = useAppDispatch();
   const {
@@ -28,7 +37,7 @@ export const RegisterPage = () => {
       isVerifyingCodeSuccess?.isVerified
     ) {
       navigate("/login");
-      dispatch(resetAuthentication())
+      dispatch(resetAuthentication());
     }
   }, [isVerifyingCodeSuccess]);
 
@@ -54,16 +63,31 @@ export const RegisterPage = () => {
         .oneOf([Yup.ref("password")], "Password must match"),
     }),
     onSubmit: (values) => {
-      console.log(values);
       dispatch(registerUser(values));
     },
   });
 
+  const handleSignInAccount = () => {
+    if (isFullScreen) {
+      navigate("/login");
+    } else {
+      dispatch(openGlobalModal("login"));
+    }
+  };
+
   return (
     <>
-      <div className="flex items-center justify-center w-screen bg-white h-screen">
+      <div
+        className={
+          isFullScreen
+            ? "flex items-center justify-center w-screen bg-white h-screen"
+            : ""
+        }
+      >
         <div className="border-[1px] border-dashed border-slate-300 rounded-md bg-white drop-shadow-xl min-w-[33%] py-4">
-          <div className="text-center mb-4 px-4 text-black">Account details</div>
+          <div className="text-center mb-4 px-4 text-black">
+            Account details
+          </div>
           <Divider dashed />
           <Form layout="vertical" className="px-4 gap-2 mt-4">
             <Row gutter={[12, 12]}>
@@ -174,6 +198,11 @@ export const RegisterPage = () => {
             >
               Create account
             </Button>
+            <div className="text-right m-4">
+              <span className="link" onClick={handleSignInAccount}>
+                Sign In account
+              </span>
+            </div>
 
             {isVerificationCodeSent && (
               <>

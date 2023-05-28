@@ -5,7 +5,7 @@ import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { STRINGS } from "../utils/constants/strings";
 import { CreateNGONAssets } from "./create-ngon-assets";
 import { logout } from "../redux/userReducer";
-import { ReactComponent as NGONLogo   } from "../assets/ngon.svg";
+import { ReactComponent as NGONLogo } from "../assets/ngon.svg";
 
 const ProfilePopover = ({ profile }: any) => {
   const dispatch = useAppDispatch();
@@ -14,7 +14,7 @@ const ProfilePopover = ({ profile }: any) => {
   const handleLogout = () => {
     dispatch(logout({}));
     localStorage.removeItem("ngon:token");
-    navigate("/login", {
+    navigate("/", {
       replace: true,
     });
   };
@@ -58,7 +58,10 @@ export const Header = () => {
   return (
     <div className="flex justify-between items-center w-full bg-white">
       <div className="h-10">
-        <NGONLogo className="w-20 h-10 cursor-pointer" onClick={navigateToHome}/>
+        <NGONLogo
+          className="w-20 h-10 cursor-pointer"
+          onClick={navigateToHome}
+        />
       </div>
       <div className="">
         <div className="flex items-center gap-8">
@@ -78,20 +81,29 @@ export const Header = () => {
               Sign up
             </NavLink>
           )}
+          {authToken && (
+            <NavLink
+              className="cursor-pointer text-black hover:text-black"
+              to={"/assets"}
+            >
+              Assets
+            </NavLink>
+          )}
           <div>
             <CreateNGONAssets />
           </div>
-          <Popover
-            content={<ProfilePopover profile={userProfile} />}
-            trigger={["click"]}
-            placement="bottomRight"
-            arrow={{ arrowPointAtCenter: true }}
-          >
-            <Avatar
-              className="cursor-pointer"
-              size={35}
-            >{userProfile?.firstName?.[0] || ""}</Avatar>
-          </Popover>
+          {authToken && (
+            <Popover
+              content={<ProfilePopover profile={userProfile} />}
+              trigger={["click"]}
+              placement="bottomRight"
+              arrow={{ arrowPointAtCenter: true }}
+            >
+              <Avatar className="cursor-pointer" size={35}>
+                {userProfile?.firstName?.[0] || ""}
+              </Avatar>
+            </Popover>
+          )}
         </div>
       </div>
     </div>

@@ -1,19 +1,29 @@
 import { Button, Divider, Form, Input } from "antd";
-import { FaFacebookSquare } from "react-icons/fa";
-import { GrLinkedinOption } from "react-icons/gr";
-import { FcGoogle } from "react-icons/fc";
-import TooltipInputField from "../components/tooltipInputField/tooltipInputField";
 import { useFormik } from "formik";
-import * as yup from "yup";
-import { loginUser, resetAuthentication } from "../redux/authReducer";
-import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { useEffect } from "react";
+import { FaFacebookSquare } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
+import { GrLinkedinOption } from "react-icons/gr";
+import { useLocation, useNavigate } from "react-router-dom";
+import * as yup from "yup";
+import TooltipInputField from "../components/tooltipInputField/tooltipInputField";
+import {
+  closeGlobalModal,
+  loginUser,
+  openGlobalModal,
+  resetAuthentication,
+} from "../redux/authReducer";
+import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { setToken } from "../redux/userReducer";
-import { useNavigate } from "react-router-dom";
 
-export const LoginPage = () => {
+export const LoginPage = ({
+  isFullScreen = true,
+}: {
+  isFullScreen?: boolean;
+}) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { isLoginLoading, isLoginSuccess } = useAppSelector(
     (state: RootState) => state.authentication
@@ -21,16 +31,27 @@ export const LoginPage = () => {
 
   useEffect(() => {
     if (isLoginSuccess) {
-      console.log(isLoginSuccess);
-      localStorage.setItem('ngon:token', isLoginSuccess);
+      localStorage.setItem("ngon:token", isLoginSuccess);
+      dispatch(closeGlobalModal());
       dispatch(setToken(isLoginSuccess));
-      dispatch(resetAuthentication())
-      navigate("/", {
-        replace: true,
-      });
+      dispatch(resetAuthentication());
+      navigate(
+        location.pathname === "/login" ? "/marketplace" : location.pathname,
+        {
+          replace: true,
+        }
+      );
     }
   }, [isLoginSuccess]);
-  
+
+  const handleCreateAccount = () => {
+    if (isFullScreen) {
+      navigate("/register");
+    } else {
+      dispatch(openGlobalModal("register"));
+    }
+  };
+
   const { values, handleChange, errors, handleSubmit } = useFormik({
     initialValues: {
       email: "",
@@ -49,9 +70,15 @@ export const LoginPage = () => {
 
   return (
     <>
-      <div className="flex items-center justify-center w-screen bg-white h-screen">
+      <div
+        className={
+          isFullScreen
+            ? "flex items-center justify-center w-screen bg-white h-screen"
+            : ""
+        }
+      >
         <div className="border-[1px] border-dashed border-slate-300 rounded-md bg-white drop-shadow-xl min-w-[75%] sm:min-w-[50%] lg:min-w-[33%] py-4">
-          <div className="text-center mb-4 px-4 text-black">Login or Sign up</div>
+          <div className="text-center mb-4 px-4 text-black">Login</div>
           <Divider dashed />
           <div className="my-4 px-4 text-black">Welcome to Ngon</div>
           <Form layout="vertical" className="px-4 gap-2">
@@ -91,8 +118,12 @@ export const LoginPage = () => {
               Login
             </Button>
           </Form>
-
-          <Divider dashed>or</Divider>
+          <div className="text-right m-4">
+            <span className="link" onClick={handleCreateAccount}>
+              Create an account
+            </span>
+          </div>
+          {/* <Divider dashed>or</Divider>
           <div className="px-4">
             <Button block shape="round" className="mt-4 flex items-center">
               <FaFacebookSquare size={16} />{" "}
@@ -105,7 +136,7 @@ export const LoginPage = () => {
             <Button block shape="round" className="mt-4 flex items-center">
               <FcGoogle /> <span className="flex-1">Continue with Gmail</span>
             </Button>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

@@ -1,24 +1,18 @@
-import {
-  Avatar,
-  Badge,
-  Divider,
-  Layout as AntdLayout,
-  Menu,
-  Popover,
-} from "antd";
+import { Layout as AntdLayout, Divider } from "antd";
 import { useEffect } from "react";
-import { MdOutlineNotificationsActive } from "react-icons/md";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import { AuthModal } from "../components/auth-modal";
 import { Header } from "../components/header";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
-import { getCategories } from "../redux/userReducer";
-import { DashboardMenus } from "../utils/constants/menus";
+import { getCategories, getProfile, setToken } from "../redux/userReducer";
+import { PrivateRoutes } from "../routes/privateRoutes";
 import { STRINGS } from "../utils/constants/strings";
+import { AssetDetails } from "./asset-details.page";
 import { AssetOnboadingDetails } from "./asset-onboarding-details.page";
 import { AssetsPage } from "./assets.page";
-import { DashboardPage } from "./dashboard.page";
-import { AssetDetails } from "./asset-details.page";
+import { ContentPage } from "./content.page";
 import { ProfilePage } from "./profile.page";
+import MarketplacePage from "./marketplace.page";
 
 const { Sider, Content, Header: AntdHeader } = AntdLayout;
 
@@ -80,15 +74,32 @@ const ProfilePopover = () => {
 
 export const HomePage = () => {
   const navigate = useNavigate();
-  const user = useAppSelector((state: RootState) => state.user);
-  const dispatchEvent = useAppDispatch();
+  const { categories, authToken, userProfile } = useAppSelector(
+    (state: RootState) => state.user
+  );
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    console.log(user);
-    if (!user?.categories.length) {
-      dispatchEvent(getCategories({}));
+    if (!categories.length && authToken) {
+      dispatch(getCategories({}));
     }
-  }, [user.categories, dispatchEvent]);
+  }, [categories, dispatch, authToken]);
+
+  useEffect(() => {
+    if (authToken && Object.keys(userProfile).length === 0) {
+      dispatch(getProfile({}));
+    }
+  }, [authToken]);
+
+  const authLocalToken = localStorage.getItem("ngon:token");
+  useEffect(() => {
+    if (
+      (authToken || authLocalToken) &&
+      Object.keys(userProfile).length === 0
+    ) {
+      dispatch(setToken(authToken || authLocalToken));
+    }
+  }, [authLocalToken, authToken]);
 
   return (
     <>
@@ -100,23 +111,61 @@ export const HomePage = () => {
           <Content className="bg-[#fafbfe] p-4 text-black h-screen overflow-auto">
             <div>
               <Routes>
-                <Route path={STRINGS.ASSETS_PATH} element={<AssetsPage />} />
+                <Route
+                  path={"/marketplace"}
+                  element={
+                    <PrivateRoutes>
+                      <MarketplacePage />
+                    </PrivateRoutes>
+                  }
+                />
+                <Route
+                  path={"/assets"}
+                  element={
+                    <PrivateRoutes>
+                      <AssetsPage />
+                    </PrivateRoutes>
+                  }
+                />
                 <Route
                   path={"/asset-onboarding/details"}
-                  element={<AssetOnboadingDetails />}
+                  element={
+                    <PrivateRoutes>
+                      <AssetOnboadingDetails />
+                    </PrivateRoutes>
+                  }
                 />
                 <Route
                   path={"/asset-onboarding/details/:id"}
-                  element={<AssetOnboadingDetails />}
+                  element={
+                    <PrivateRoutes>
+                      <AssetOnboadingDetails />
+                    </PrivateRoutes>
+                  }
                 />
-                <Route path={"/assets/:id"} element={<AssetDetails />} />
-                <Route path={STRINGS.BASE_PATH} element={<AssetsPage />} />
-                <Route path={STRINGS.PROFILE_PATH} element={<ProfilePage />} />
+                <Route
+                  path={"/assets/:id"}
+                  element={
+                    <PrivateRoutes>
+                      <AssetDetails />
+                    </PrivateRoutes>
+                  }
+                />
+                <Route path={STRINGS.BASE_PATH} element={<ContentPage />} />
+                <Route
+                  path={STRINGS.PROFILE_PATH}
+                  element={
+                    <PrivateRoutes>
+                      <ProfilePage />
+                    </PrivateRoutes>
+                  }
+                />
               </Routes>
             </div>
           </Content>
         </AntdLayout>
       </AntdLayout>
+      <AuthModal />
     </>
   );
 };

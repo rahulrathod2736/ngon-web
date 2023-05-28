@@ -41,10 +41,7 @@ export const assetOnboardingDetails = createAsyncThunk<
   "asset/assetOnboardingDetails",
   async (args, { getState, rejectWithValue }) => {
     try {
-      const resp = await axiosInstance.post(
-        apiRoutes.assets,
-        args.values
-      );
+      const resp = await axiosInstance.post(apiRoutes.assets, args.values);
       return resp.data;
     } catch (err: any) {
       if (!err.response) {
@@ -135,18 +132,15 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(assetOnboardingDetails.pending, (state) => {
-        console.log(state, "pending");
         state.isAssetModelCreateLoading = true;
         state.isAssetModelCreateError = null;
       })
       .addCase(assetOnboardingDetails.fulfilled, (state, action) => {
-        console.log(state, action, "fulfilled");
         const { data } = action.payload || {};
         state.isAssetModelCreateLoading = false;
         state.isAssetModelCreateSuccess = data;
       })
       .addCase(assetOnboardingDetails.rejected, (state, action: any) => {
-        console.log(state, action, "rejected");
         message.error(action.payload.message);
         state.isAssetModelCreateLoading = false;
         state.isAssetModelCreateError = action.payload.message;
@@ -154,19 +148,16 @@ const slice = createSlice({
 
     builder
       .addCase(assetUpdateDetailsById.pending, (state) => {
-        console.log(state, "pending");
         state.isAssetModelCreateLoading = true;
         state.isAssetModelCreateError = null;
       })
       .addCase(assetUpdateDetailsById.fulfilled, (state, action) => {
-        console.log(state, action, "fulfilled");
         const { data } = action.payload || {};
         state.isAssetModelCreateLoading = false;
         state.isAssetModelCreateSuccess = data;
         state.isAssetGetDetailsSuccess = data;
       })
       .addCase(assetUpdateDetailsById.rejected, (state, action: any) => {
-        console.log(state, action, "rejected");
         message.error(action.payload.message);
         state.isAssetModelCreateLoading = false;
         state.isAssetModelCreateError = action.payload.message;
@@ -174,18 +165,15 @@ const slice = createSlice({
 
     builder
       .addCase(getAssetDetailsById.pending, (state) => {
-        console.log(state, "pending");
         state.isAssetGetDetailsLoading = true;
         state.isAssetGetDetailsError = null;
       })
       .addCase(getAssetDetailsById.fulfilled, (state, action) => {
-        console.log(state, action, "fulfilled");
         const { data } = action.payload || {};
         state.isAssetGetDetailsLoading = false;
         state.isAssetGetDetailsSuccess = data;
       })
       .addCase(getAssetDetailsById.rejected, (state, action: any) => {
-        console.log(state, action, "rejected");
         message.error(action.payload.message);
         state.isAssetGetDetailsLoading = false;
         state.isAssetGetDetailsError = action.payload.message;
@@ -193,19 +181,16 @@ const slice = createSlice({
 
     builder
       .addCase(assetUpdateByStatus.pending, (state) => {
-        console.log(state, "pending");
         state.isAssetUpdateStatusLoading = true;
         state.isAssetUpdateStatusError = null;
       })
       .addCase(assetUpdateByStatus.fulfilled, (state, action) => {
-        console.log(state, action, "fulfilled");
         const { data } = action.payload || {};
         state.isAssetUpdateStatusLoading = false;
         state.isAssetUpdateStatusSuccess = data;
         state.isAssetGetDetailsSuccess = data;
       })
       .addCase(assetUpdateByStatus.rejected, (state, action: any) => {
-        console.log(state, action, "rejected");
         message.error(action.payload.message);
         state.isAssetUpdateStatusLoading = false;
         state.isAssetUpdateStatusError = action.payload.message;
