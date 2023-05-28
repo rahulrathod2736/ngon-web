@@ -66,3 +66,17 @@ input[type="number"] {
 button:focus {
   outline: none !important;
 }
+
+.ant-collapse {
+  overflow: hidden;
+}
+
+.ant-collapse-header {
+  border-radius: 8px !important;
+}
+
+.single-line-ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

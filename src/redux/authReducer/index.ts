@@ -48,6 +48,7 @@ export const loginUser = createAsyncThunk<
 });
 
 interface IAuthState {
+  authModal: string | null;
   isCreateAccountLoading: boolean;
   isCreateAccountSuccess: Record<string, any>;
   isCreateAccountError: string | null;
@@ -61,6 +62,7 @@ interface IAuthState {
 }
 
 const initialState: IAuthState = {
+  authModal: null,
   isCreateAccountLoading: false,
   isCreateAccountSuccess: {},
   isCreateAccountError: null,
@@ -89,16 +91,23 @@ const slice = createSlice({
       state.isVerifyingCodeError = initialState.isVerifyingCodeError;
       state.isVerificationCodeSent = initialState.isVerificationCodeSent;
     },
+    openGlobalModal: (
+      state,
+      statePayload: { type: string; payload: string }
+    ) => {
+      state.authModal = statePayload.payload;
+    },
+    closeGlobalModal: (state) => {
+      state.authModal = null;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(registerUser.pending, (state) => {
-        console.log(state, "pending");
         state.isCreateAccountLoading = true;
         state.isCreateAccountError = null;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
-        console.log(state, action, "fulfilled");
         const { data } = action.payload || {};
         if (data?._id) {
           state.isVerificationCodeSent = true;
@@ -107,7 +116,6 @@ const slice = createSlice({
         }
       })
       .addCase(registerUser.rejected, (state, action: any) => {
-        console.log(state, action, "rejected");
         message.error(action.payload.message);
         state.isCreateAccountLoading = false;
         state.isCreateAccountError = action?.payload?.message || "";
@@ -115,12 +123,10 @@ const slice = createSlice({
 
     builder
       .addCase(verifyCode.pending, (state) => {
-        console.log(state, "pending");
         state.isVerifyingCodeLoading = true;
         state.isVerifyingCodeError = null;
       })
       .addCase(verifyCode.fulfilled, (state, action) => {
-        console.log(state, action, "fulfilled");
         const { data } = action.payload || {};
         if (data?.isVerified) {
           state.isVerifyingCodeLoading = false;
@@ -128,7 +134,6 @@ const slice = createSlice({
         }
       })
       .addCase(verifyCode.rejected, (state, action: any) => {
-        console.log(state, action, "rejected");
         message.error(action.payload.message);
         state.isVerifyingCodeLoading = false;
         state.isVerifyingCodeSuccess = action?.payload?.message || "";
@@ -136,12 +141,10 @@ const slice = createSlice({
 
     builder
       .addCase(loginUser.pending, (state) => {
-        console.log(state, "pending");
         state.isLoginLoading = true;
         state.isLoginError = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        console.log(state, action, "fulfilled");
         const { data } = action.payload || {};
         if (data) {
           message.success("Login Successfully");
@@ -150,7 +153,6 @@ const slice = createSlice({
         }
       })
       .addCase(loginUser.rejected, (state, action: any) => {
-        console.log(state, action, "rejected");
         message.error(action.payload.message);
         state.isLoginLoading = false;
         state.isLoginError = action?.payload?.message || "";
@@ -158,6 +160,7 @@ const slice = createSlice({
   },
 });
 
-export const { resetAuthentication } = slice.actions;
+export const { resetAuthentication, openGlobalModal, closeGlobalModal } =
+  slice.actions;
 
 export const authReducer = slice.reducer;

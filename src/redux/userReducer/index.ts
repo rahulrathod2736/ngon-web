@@ -24,8 +24,8 @@ interface IAuthState {
   categories: Record<string, any>[];
   isGetProfileLoading: boolean;
   isGetProfileError: string | null;
-  isFollowUnfollowLoading: boolean
-  isFollowUnfollowError: string | null,
+  isFollowUnfollowLoading: boolean;
+  isFollowUnfollowError: string | null;
 }
 
 const initialState: IAuthState = {
@@ -102,53 +102,44 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getCategories.pending, (state) => {
-        console.log(state, "pending");
         // state.isCreateAccountLoading = true;
         // state.isCreateAccountError = null;
       })
       .addCase(getCategories.fulfilled, (state, action) => {
-        console.log(state, action, "fulfilled");
         const { data } = action.payload || {};
         state.categories = data;
       })
       .addCase(getCategories.rejected, (state, action: any) => {
-        console.log(state, action, "rejected");
         message.error(action.payload.message);
         // state.isCreateAccountLoading = false;
         // state.isCreateAccountError = action?.payload?.message || "";
       });
     builder
       .addCase(getProfile.pending, (state) => {
-        console.log(state, "pending");
         state.isGetProfileLoading = true;
         state.isGetProfileError = null;
       })
       .addCase(getProfile.fulfilled, (state, action) => {
-        console.log(state, action, "fulfilled");
         const { data } = action.payload || {};
         state.userProfile = data;
         state.isGetProfileLoading = false;
       })
       .addCase(getProfile.rejected, (state, action: any) => {
-        console.log(state, action, "rejected");
         message.error(action.payload.message);
         state.isGetProfileLoading = false;
         state.isGetProfileError = action?.payload?.message || "";
       });
     builder
       .addCase(followUnfollowUsers.pending, (state) => {
-        console.log(state, "pending");
         state.isFollowUnfollowLoading = true;
         state.isFollowUnfollowError = null;
       })
       .addCase(followUnfollowUsers.fulfilled, (state, action) => {
-        console.log(state, action, "fulfilled");
         const { data } = action.payload || {};
         state.userProfile = data;
         state.isFollowUnfollowLoading = false;
       })
       .addCase(followUnfollowUsers.rejected, (state, action: any) => {
-        console.log(state, action, "rejected");
         message.error(action.payload.message);
         state.isFollowUnfollowLoading = false;
         state.isFollowUnfollowError = action?.payload?.message || "";

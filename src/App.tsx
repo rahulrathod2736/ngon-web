@@ -28,14 +28,7 @@ function App() {
           </PrivateRoutes>
         }
       />
-      <Route
-        path={"/*"}
-        element={
-          <PrivateRoutes>
-            <HomePage />
-          </PrivateRoutes>
-        }
-      />
+      <Route path={"/*"} element={<HomePage />} />
       <Route path={"/login"} element={<LoginPage />} />
       <Route path={"/register"} element={<RegisterPage />} />
       {/* <Route path={"/*"} element={<HomePage />}/> */}
