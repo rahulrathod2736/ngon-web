@@ -8,7 +8,7 @@ import { ReactComponent as NGONLogo } from "../assets/ngon.svg";
 import OpenSource from "../assets/open-source.png";
 import ShowArt from "../assets/show-art.png";
 import { openGlobalModal } from "../redux/authReducer";
-import { useAppDispatch } from "../redux/store";
+import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { showSuccessMessage } from "../utils/functions";
 
 export const ContentPage = () => {
@@ -16,22 +16,30 @@ export const ContentPage = () => {
   const dispatch = useAppDispatch();
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const navigateToBuyModels = () => {
-    navigate("/assets");
+  const { authToken } = useAppSelector((state: RootState) => state.user);
+  const navigateToAssets = () => {
+    if (authToken) {
+      navigate("/assets");
+    } else {
+      dispatch(openGlobalModal("login"));
+    }
   };
-
   const joinNGONModal = () => {
     dispatch(openGlobalModal("register"));
   };
 
   const handleSearchValue = () => {
-    navigate({
-      pathname: "/assets",
-      search: createSearchParams({
-          searchQuery
-      }).toString()
-  });
-  }
+    if (authToken) {
+      navigate({
+        pathname: "/assets",
+        search: createSearchParams({
+          searchQuery,
+        }).toString(),
+      });
+    } else {
+      dispatch(openGlobalModal("login"));
+    }
+  };
   return (
     <div className="-m-4">
       <div className="h-[66vh] bg-white flex items-center justify-center">
@@ -44,10 +52,15 @@ export const ContentPage = () => {
               size="large"
               value={searchQuery}
               onChange={(e) => {
-                setSearchQuery(e.target.value)
+                setSearchQuery(e.target.value);
               }}
             />
-            <Button className="!rounded-full !px-8" type="primary" size="large" onClick={handleSearchValue}>
+            <Button
+              className="!rounded-full !px-8"
+              type="primary"
+              size="large"
+              onClick={handleSearchValue}
+            >
               Search
             </Button>
           </div>
@@ -89,7 +102,7 @@ export const ContentPage = () => {
             </div>
             <Button
               className="!rounded-full !px-4 !border-white hover:!text-black"
-              onClick={navigateToBuyModels}
+              onClick={navigateToAssets}
             >
               Buy Models
             </Button>
