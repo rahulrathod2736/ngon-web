@@ -59,7 +59,7 @@ export const Header = () => {
     <div className="flex justify-between items-center w-full bg-white">
       <div className="h-10">
         <NGONLogo
-          className="w-20 h-10 cursor-pointer"
+          className="w-24 h-12 cursor-pointer"
           onClick={navigateToHome}
         />
       </div>

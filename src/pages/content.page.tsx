@@ -44,7 +44,7 @@ export const ContentPage = () => {
     <div className="-m-4">
       <div className="h-[66vh] bg-white flex items-center justify-center">
         <div className="flex flex-col items-center gap-6">
-          <NGONLogo className="w-40 h-20" />
+          <NGONLogo className="w-80 h-48" />
           <div className="flex gap-6">
             <Input
               className="min-w-[500px] rounded-full pl-5"
@@ -97,8 +97,7 @@ export const ContentPage = () => {
           <div className="flex items-start gap-6 flex-col mx-20">
             <div className="text-xl">Buy and Sell Models with Ngon</div>
             <div className="w-2/3">
-              Join NGON to utilise your 3D skills to create innovative 3D models
-              to discover 3D models which suits the demands of your business.
+              Upload your Models for sell and increase your income buy uploading free or paid innovative models
             </div>
             <Button
               className="!rounded-full !px-4 !border-white hover:!text-black"
@@ -120,8 +119,7 @@ export const ContentPage = () => {
           <div className="flex items-start gap-6 flex-col mx-20">
             <div className="text-xl">Share and Exhibit Your work</div>
             <div className="w-2/3">
-              Join NGON to utilise your 3D skills to create innovative 3D models
-              to discover 3D models which suits the demands of your business.
+              Are you creative 3D Artist?? Show your creative and Innovative art to ourb audience and generate massive incomes.
             </div>
             <Button
               className="!rounded-full !px-4 !border-white hover:!text-black"
@@ -139,8 +137,7 @@ export const ContentPage = () => {
           <div className="flex items-start gap-6 flex-col mx-20">
             <div className="text-xl">Join First Open Source 3D Platform</div>
             <div className="w-2/3">
-              Join NGON to utilise your 3D skills to create innovative 3D models
-              to discover 3D models which suits the demands of your business.
+              In future, We are planning to introduce feature called Open source for contribution.
             </div>
             <Button
               className="!rounded-full !px-4 !border-white hover:!text-black"
@@ -164,8 +161,7 @@ export const ContentPage = () => {
           <div className="flex items-start gap-6 flex-col mx-20">
             <div className="text-xl">Meet and Learn From Artists</div>
             <div className="w-2/3">
-              Join NGON to utilise your 3D skills to create innovative 3D models
-              to discover 3D models which suits the demands of your business.
+              Excited to connect with innovatove artists. Explore your network and share experience.
             </div>
             <Button
               className="!rounded-full !px-4 !border-white hover:!text-black"
