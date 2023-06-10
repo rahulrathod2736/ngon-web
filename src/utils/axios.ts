@@ -3,7 +3,7 @@ import axios from "axios";
 const version = 'v1';
 
 export const axiosInstance = axios.create({
-  baseURL: `${import.meta.env.VITE_NOGON_API_URL}/${version}`,
+  baseURL: `${import.meta.env.VITE_NGON_API_URL}/${version}`,
 });
 
 axiosInstance.interceptors.request.use((config) => {
@@ -16,19 +16,19 @@ axiosInstance.interceptors.request.use((config) => {
 });
 
 axiosInstance.interceptors.response.use(
-    function (response) {
-      return response;
-    },
-    function (er) {
-      if (axios.isAxiosError(er)) {
-        if (er.response) {
-          if (er.response.status == 401) {
-            localStorage.removeItem("ngon:token");
-            window.location.href = "/login" // <-- navigate
-          }
+  function (response) {
+    return response;
+  },
+  function (er) {
+    if (axios.isAxiosError(er)) {
+      if (er.response) {
+        if (er.response.status == 401) {
+          localStorage.removeItem("ngon:token");
+          window.location.href = "/login" // <-- navigate
         }
       }
-
-      return Promise.reject(er);
     }
+
+    return Promise.reject(er);
+  }
 );
