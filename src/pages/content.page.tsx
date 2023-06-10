@@ -10,6 +10,7 @@ import ShowArt from "../assets/show-art.png";
 import { openGlobalModal } from "../redux/authReducer";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { showSuccessMessage } from "../utils/functions";
+import { ModelViewer } from "../components/model-viewer";
 
 export const ContentPage = () => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ export const ContentPage = () => {
     }
   };
   return (
-    <div className="-m-4">
+    <div className="-m-4 bg-white">
       <div className="h-[66vh] bg-white flex items-center justify-center">
         <div className="flex flex-col items-center gap-6">
           <NGONLogo className="w-80 h-48" />
@@ -69,9 +70,11 @@ export const ContentPage = () => {
       <div className="p-6 bg-[#1677ff] text-white text-xl text-center">
         Join NGON for free
       </div>
-      {/* <div className="aspect-square max-h-[600px] w-full">
-        <ModelViewer modelUrl="/m1.glb"/>
-      </div> */}
+      <div className="w-full py-8">
+        <div className="aspect-square max-h-[400px] max-w-[400px] m-auto bg-white bg-[#F5663A]">
+          <ModelViewer modelUrl="https://ngon-assets-images.s3.ap-south-1.amazonaws.com/home-model.glb" />
+        </div>
+      </div>
       <div className="h-[400px] bg-white flex items-start">
         <div className="w-1/2 flex items-center justify-center h-full">
           <img src={JoinNgon} />
