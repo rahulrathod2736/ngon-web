@@ -1,8 +1,10 @@
 import { Layout as AntdLayout, Divider } from "antd";
 import { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import { AnalyticsWrapper } from "../components/analytics-viewwrapper";
 import { AuthModal } from "../components/auth-modal";
 import { Header } from "../components/header";
+import { useAnalytics } from "../hooks/useAnalytics";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { getCategories, getProfile, setToken } from "../redux/userReducer";
 import { PrivateRoutes } from "../routes/privateRoutes";
@@ -11,8 +13,8 @@ import { AssetDetails } from "./asset-details.page";
 import { AssetOnboadingDetails } from "./asset-onboarding-details.page";
 import { AssetsPage } from "./assets.page";
 import { ContentPage } from "./content.page";
-import { ProfilePage } from "./profile.page";
 import MarketplacePage from "./marketplace.page";
+import { ProfilePage } from "./profile.page";
 
 const { Sider, Content, Header: AntdHeader } = AntdLayout;
 
@@ -79,6 +81,8 @@ export const HomePage = () => {
   );
   const dispatch = useAppDispatch();
 
+  const { initialized } = useAnalytics();
+
   useEffect(() => {
     if (!categories.length && authToken) {
       dispatch(getCategories({}));
@@ -110,61 +114,64 @@ export const HomePage = () => {
           </AntdHeader>
           <Content className="bg-[#fafbfe] p-4 text-black h-screen overflow-auto">
             <div>
-              <Routes>
-                <Route
-                  path={"/marketplace"}
-                  element={
-                    <PrivateRoutes>
-                      <MarketplacePage />
-                    </PrivateRoutes>
-                  }
-                />
-                <Route
-                  path={"/assets"}
-                  element={
-                    <PrivateRoutes>
-                      <AssetsPage />
-                    </PrivateRoutes>
-                  }
-                />
-                <Route
-                  path={"/asset-onboarding/details"}
-                  element={
-                    <PrivateRoutes>
-                      <AssetOnboadingDetails />
-                    </PrivateRoutes>
-                  }
-                />
-                <Route
-                  path={"/asset-onboarding/details/:id"}
-                  element={
-                    <PrivateRoutes>
-                      <AssetOnboadingDetails />
-                    </PrivateRoutes>
-                  }
-                />
-                <Route
-                  path={"/assets/:id"}
-                  element={
-                    <PrivateRoutes>
-                      <AssetDetails />
-                    </PrivateRoutes>
-                  }
-                />
-                <Route path={STRINGS.BASE_PATH} element={<ContentPage />} />
-                <Route
-                  path={STRINGS.PROFILE_PATH}
-                  element={
-                    <PrivateRoutes>
-                      <ProfilePage />
-                    </PrivateRoutes>
-                  }
-                />
-              </Routes>
+
+              <AnalyticsWrapper initialized={initialized}>
+                <Routes>
+                  <Route
+                    path={"/marketplace"}
+                    element={
+                      <PrivateRoutes>
+                        <MarketplacePage />
+                      </PrivateRoutes>
+                    }
+                  />
+                  <Route
+                    path={"/assets"}
+                    element={
+                      <PrivateRoutes>
+                        <AssetsPage />
+                      </PrivateRoutes>
+                    }
+                  />
+                  <Route
+                    path={"/asset-onboarding/details"}
+                    element={
+                      <PrivateRoutes>
+                        <AssetOnboadingDetails />
+                      </PrivateRoutes>
+                    }
+                  />
+                  <Route
+                    path={"/asset-onboarding/details/:id"}
+                    element={
+                      <PrivateRoutes>
+                        <AssetOnboadingDetails />
+                      </PrivateRoutes>
+                    }
+                  />
+                  <Route
+                    path={"/assets/:id"}
+                    element={
+                      <PrivateRoutes>
+                        <AssetDetails />
+                      </PrivateRoutes>
+                    }
+                  />
+                  <Route path={STRINGS.BASE_PATH} element={<ContentPage />} />
+                  <Route
+                    path={STRINGS.PROFILE_PATH}
+                    element={
+                      <PrivateRoutes>
+                        <ProfilePage />
+                      </PrivateRoutes>
+                    }
+                  />
+                </Routes>
+              </AnalyticsWrapper>
             </div>
           </Content>
         </AntdLayout>
-      </AntdLayout>
+      </AntdLayout >
       <AuthModal />
     </>
   );
