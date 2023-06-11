@@ -1,16 +1,16 @@
-import React, { useCallback, useEffect, useState } from "react";
 import { Avatar, Badge, Button, Divider, Input, Rate, Tabs, Tag } from "antd";
-import { ModelViewer } from "../components/model-viewer";
-import { TiTags } from "react-icons/ti";
-import { FiInfo, FiShare2 } from "react-icons/fi";
+import moment from "moment";
+import { useCallback, useEffect, useState } from "react";
 import { AiFillHeart, AiOutlineComment } from "react-icons/ai";
 import { FaGooglePay } from "react-icons/fa";
+import { FiInfo, FiShare2 } from "react-icons/fi";
 import { ImSpinner8 } from "react-icons/im";
 import { SiPaytm } from "react-icons/si";
-import { Reviews } from "../components/reviews";
-import { Comments } from "../components/comments";
-import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
+import { TiTags } from "react-icons/ti";
 import { useParams } from "react-router-dom";
+import { Comments } from "../components/comments";
+import { ModelViewer } from "../components/model-viewer";
+import { Reviews } from "../components/reviews";
 import {
   getAssetDetailById,
   getModelUrl,
@@ -18,12 +18,13 @@ import {
   submitComment,
   submitReviews,
 } from "../redux/assetReducer";
-import moment from "moment";
+import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { followUnfollowUsers } from "../redux/userReducer";
-import { getFullName } from "../utils/functions";
 import { axiosInstance } from "../utils/axios";
 import { apiRoutes } from "../utils/constants/apiRoutes";
-import { ImageUpload } from "../components/image-upload";
+import { getFullName } from "../utils/functions";
+
+import ReactGa from "react-ga";
 
 export const AssetDetails = () => {
   const { id } = useParams();
@@ -102,6 +103,17 @@ export const AssetDetails = () => {
       link.setAttribute("download", ""); //or any other extension
       document.body.appendChild(link);
       link.click();
+
+      if (
+        !window.location.href.includes("localhost") ||
+        !window.location.href.includes("127.0.0.1")
+      ) {
+        ReactGa.event({
+          category: "Asset Download",
+          action: "download",
+          label: `${userProfile?._id}/${id}`,
+        });
+      }
     }
   };
 
