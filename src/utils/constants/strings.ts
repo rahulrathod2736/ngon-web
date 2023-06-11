@@ -33,9 +33,11 @@ export const STRINGS = {
   REQUIRED_PRICE: "Asset price is required",
   REQUIRED_CURRENCY: "Asset currency is required",
   REQUIRED_TAGS: "Asset tags are required",
-  UPLOAD_ASSET_MODEL: "Upload Asset Model",
+  UPLOAD_ASSET_MODEL: "Upload Asset Model (.glb file)",
+  UPLOAD_ASSET_OTHER_MODEL:
+    "Upload Asset Model (.fbx, .glb, .obj, .gltf, .blend file)",
   UPLOAD_ASSET_IMAGE: "Upload Asset Thumbnail",
   errorMessage: {
-    validPrice: "Please enter a valid price"
-  }
+    validPrice: "Please enter a valid price",
+  },
 };

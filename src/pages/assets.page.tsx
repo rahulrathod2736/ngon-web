@@ -1,4 +1,4 @@
-import { Button, Collapse, Divider, Form, Input, Select } from "antd";
+import { Button, Collapse, Divider, Form, Input, Row, Select } from "antd";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -18,6 +18,8 @@ const initialValues = {
   category: null,
   sortBy: "createdAt",
   order: "desc",
+  skip: 0,
+  limit: 15,
 };
 
 export const AssetsPage = () => {
@@ -51,11 +53,15 @@ export const AssetsPage = () => {
 
   const applyFiltersToAssets = async (values: Record<string, any>) => {
     try {
+      console.log("values");
       setIsLoading(true);
       if (_.isEqual(filterQueries, values)) {
         return;
       }
-      const filters: Record<string, string> = {};
+      const filters: Record<string, string> = {
+        skip: values.skip,
+        limit: values.limit,
+      };
       if (values.searchQuery) {
         filters.searchQuery = values.searchQuery;
       }
@@ -186,7 +192,7 @@ export const AssetsPage = () => {
       </Collapse>
 
       <div className="grid grid-cols-4 gap-4 mt-8">
-        {isGetAssetsLoading || isLoading ? (
+        {isGetAssetsLoading ? (
           <Loader />
         ) : (
           assets.map((asset, i) => {
@@ -194,6 +200,24 @@ export const AssetsPage = () => {
           })
         )}
       </div>
+      {isGetAssetsLoading ? (
+        <></>
+      ) : (
+        <Row align={"middle"} justify={"center"} className="my-12">
+          <Button
+            type="primary"
+            shape="round"
+            size="large"
+            loading={isLoading}
+            onClick={() => {
+              setFieldValue("limit", values.limit + initialValues.limit);
+              handleSubmit();
+            }}
+          >
+            Load more assets
+          </Button>
+        </Row>
+      )}
     </div>
   );
 };
