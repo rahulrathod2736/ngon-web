@@ -24,7 +24,7 @@ axiosInstance.interceptors.response.use(
       if (er.response) {
         if (er.response.status == 401) {
           localStorage.removeItem("ngon:token");
-          window.location.href = "/login" // <-- navigate
+          window.location.href = "/" // <-- navigate
         }
       }
     }

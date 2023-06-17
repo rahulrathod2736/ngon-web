@@ -2,7 +2,7 @@ import { Html, OrbitControls, useProgress } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Progress } from "antd";
 import { Suspense, useEffect, useState } from "react";
-import { GLTF, GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { GLTF, GLTFLoader, } from "three/examples/jsm/loaders/GLTFLoader";
 
 function Loader() {
   const progress = useProgress();
@@ -30,12 +30,14 @@ export const ModelViewer = ({ modelUrl }: IProps) => {
     setIsLoading(true);
     const urlGltf = modelUrl || `/m1.glb`;
 
-    gltfLoader.loadAsync(urlGltf, (event: ProgressEvent<EventTarget>) => {
-      setProgress(+((event.loaded / event.total) * 100).toFixed(2))
-    }).then((g: GLTF) => {
-      setGltf(g);
-      setIsLoading(false);
-    });
+    gltfLoader
+      .loadAsync(urlGltf, (event: ProgressEvent<EventTarget>) => {
+        setProgress(+((event.loaded / event.total) * 100).toFixed(2));
+      })
+      .then((g: GLTF) => {
+        setGltf(g);
+        setIsLoading(false);
+      });
   }, [modelUrl]);
 
   return (
@@ -43,7 +45,11 @@ export const ModelViewer = ({ modelUrl }: IProps) => {
       {isLoading ? (
         <div className="w-full h-full flex items-center justify-center flex-col gap-4">
           <span>Loading 3D Model</span>
-          <Progress percent={progress} className="max-w-[500px] mx-auto" showInfo={false} />
+          <Progress
+            percent={progress}
+            className="w-1/2 max-w-[500px] mx-auto"
+            showInfo={false}
+          />
         </div>
       ) : (
         <Canvas

@@ -1,10 +1,23 @@
-import { Avatar, Badge, Button, Divider, Input, Rate, Tabs, Tag } from "antd";
+import {
+  Avatar,
+  Badge,
+  Button,
+  Divider,
+  Input,
+  Modal,
+  Rate,
+  Tabs,
+  Tag,
+  message,
+} from "antd";
 import moment from "moment";
 import { useCallback, useEffect, useState } from "react";
+import ReactGa from "react-ga";
 import { AiFillHeart, AiOutlineComment } from "react-icons/ai";
 import { FaGooglePay } from "react-icons/fa";
 import { FiInfo, FiShare2 } from "react-icons/fi";
 import { ImSpinner8 } from "react-icons/im";
+import { IoArrowDownOutline } from "react-icons/io5";
 import { SiPaytm } from "react-icons/si";
 import { TiTags } from "react-icons/ti";
 import { useParams } from "react-router-dom";
@@ -12,8 +25,6 @@ import { Comments } from "../components/comments";
 import { ModelViewer } from "../components/model-viewer";
 import { Reviews } from "../components/reviews";
 import {
-  getAssetDetailById,
-  getModelUrl,
   likeUnlikeById,
   submitComment,
   submitReviews,
@@ -23,26 +34,37 @@ import { followUnfollowUsers } from "../redux/userReducer";
 import { axiosInstance } from "../utils/axios";
 import { apiRoutes } from "../utils/constants/apiRoutes";
 import { getFullName } from "../utils/functions";
-
-import ReactGa from "react-ga";
+import { INgonAsset } from "../utils/interface";
 
 export const AssetDetails = () => {
   const { id } = useParams();
   const {
-    isGetAssetByIdLoading,
-    isGetAssetByIdError,
-    assetDetails,
-    isLikeUnlikeLoading,
-    isLikeUnlikeError,
     isSubmitReviewLoading,
     isSubmitCommentLoading,
     isGetModelUrlLoading,
-    assetModelUrl,
   } = useAppSelector((state: RootState) => state.asset);
   const { userProfile, isFollowUnfollowLoading } = useAppSelector(
     (state: RootState) => state.user
   );
   const dispatch = useAppDispatch();
+  const [assetDetails, setAssetDetails] = useState<INgonAsset | null>(null);
+  const [assetModelUrl, setAssetModelUrl] = useState<Record<
+    string,
+    any
+  > | null>(null);
+  const [assetDetailsLoading, setAssetDetailsLoading] = useState<boolean>(true);
+  const [assetModelLoading, setAssetModelLoading] = useState<boolean>(true);
+  const [downloadModal, setDownloadModal] = useState<{
+    open: boolean;
+    data: Record<string, any> | null;
+    models: Record<string, any>[];
+    loading: boolean;
+  }>({
+    open: false,
+    data: null,
+    models: [],
+    loading: false,
+  });
   const [ratings, setRatings] = useState({
     rating: 4.5,
     review: "",
@@ -51,10 +73,38 @@ export const AssetDetails = () => {
 
   useEffect(() => {
     if (id) {
-      dispatch(getAssetDetailById({ id }));
-      dispatch(getModelUrl({ id }));
+      getAssetDetailById(id);
+      getAssetModelUrlById(id);
     }
   }, [id]);
+
+  const getAssetDetailById = async (id: string) => {
+    try {
+      setAssetDetailsLoading(true);
+      const resp = await axiosInstance.get(
+        `${apiRoutes.getAssetDetails.replace(":assetId", id)}`
+      );
+      setAssetDetails(resp?.data?.data || {});
+    } catch (err: any) {
+      message.error(err?.message || "Something went Wrong!");
+    } finally {
+      setAssetDetailsLoading(false);
+    }
+  };
+
+  const getAssetModelUrlById = async (id: string) => {
+    try {
+      setAssetModelLoading(true);
+      const resp = await axiosInstance.get(
+        `${apiRoutes.getModelUrls.replace(":assetId", id)}`
+      );
+      setAssetModelUrl(resp?.data?.data || {});
+    } catch (err: any) {
+      message.error(err?.message || "Something went Wrong!");
+    } finally {
+      setAssetModelLoading(false);
+    }
+  };
 
   const likeUnlikeAssets = () => {
     dispatch(likeUnlikeById({ id }));
@@ -82,42 +132,63 @@ export const AssetDetails = () => {
     } else if (!isGetModelUrlLoading && assetModelUrl) {
       return (
         <div className="w-full h-96 bg-white rounded-md">
-          <ModelViewer modelUrl={assetModelUrl} />
+          <ModelViewer modelUrl={assetModelUrl?.glbUrl} />
         </div>
       );
     }
     return <></>;
   }, [isGetModelUrlLoading, assetModelUrl]);
 
-  const downloadModel = async () => {
-    if (id != null) {
-      const resp = await axiosInstance.post(
-        `${apiRoutes.assetMedia.replace(":assetId", id)}`,
-        {
-          type: "model",
-          action: "download",
-        }
-      );
-      const link = document.createElement("a");
-      link.href = resp.data.data.url;
-      link.setAttribute("download", ""); //or any other extension
-      document.body.appendChild(link);
-      link.click();
+  const openDownloadModel = async () => {
+    setDownloadModal((i) => ({
+      ...i,
+      open: false,
+      loading: true,
+    }));
+    const resp: Record<string, any> = await axiosInstance.get(
+      `${apiRoutes.getModelUrls.replace(
+        ":assetId",
+        assetDetails?._id || ""
+      )}?isAllModelLink=true`
+    );
+    setDownloadModal((i) => ({
+      ...i,
+      open: true,
+      loading: false,
+      models: resp.data.data.models,
+    }));
+  };
 
-      if (
-        !window.location.href.includes("localhost") ||
-        !window.location.href.includes("127.0.0.1")
-      ) {
-        ReactGa.event({
-          category: "Asset Download",
-          action: "download",
-          label: `${userProfile?._id}/${id}`,
-        });
-      }
+  const downloadSelectedModel = (i: Record<string, any>) => {
+    const link = document.createElement("a");
+    link.href = i.url;
+    link.setAttribute("download", ""); //or any other extension
+    document.body.appendChild(link);
+    link.click();
+    document.removeChild(link);
+    if (
+      !window.location.href.includes("localhost") ||
+      !window.location.href.includes("127.0.0.1")
+    ) {
+      ReactGa.event({
+        category: "Asset Download",
+        action: "download",
+        label: i.key,
+      });
     }
   };
 
-  if (isGetAssetByIdLoading) {
+  const closeDownloadModal = () => {
+    setDownloadModal((i) => ({
+      ...i,
+      open: false,
+      data: null,
+      loading: false,
+      models: [],
+    }));
+  };
+
+  if (assetDetailsLoading || assetModelLoading) {
     return (
       <div className="flex gap-6 w-full p-8 bg-white text-lg items-center justify-center">
         <ImSpinner8 className="animate-spin" />
@@ -149,7 +220,7 @@ export const AssetDetails = () => {
               <Divider type="vertical" />
               <div className="flex items-center mx-2 text-gray-700">
                 <FiShare2 />
-                <span className="ml-2 text-xs">200</span>
+                <span className="ml-2 text-xs">0</span>
               </div>
               <Divider type="vertical" />
               <div className="flex items-center mx-2 text-gray-700">
@@ -190,14 +261,6 @@ export const AssetDetails = () => {
                 )}
               </div>
             </div>
-            <Button
-              type="primary"
-              color="success"
-              size="small"
-              className="!text-xs"
-            >
-              800 Buys
-            </Button>
           </div>
           <Divider className="!my-6" />
           {assetDetails?.description && (
@@ -228,9 +291,6 @@ export const AssetDetails = () => {
                 );
               })}
             </span>
-          </div>
-          <div className="my-1">
-            DMG, Joe, smith and 1500 others liked this model
           </div>
         </div>
         {!assetDetails?.reviews?.some((r) => r.user._id === userProfile?._id) &&
@@ -348,7 +408,13 @@ export const AssetDetails = () => {
       <div className="w-1/4">
         {assetDetails?.priceModel === "free" ? (
           <div>
-            <Button block type="primary" danger onClick={downloadModel}>
+            <Button
+              block
+              type="primary"
+              danger
+              onClick={openDownloadModel}
+              loading={downloadModal?.loading}
+            >
               Download
             </Button>
           </div>
@@ -396,6 +462,17 @@ export const AssetDetails = () => {
 
         <div className="bg-slate-200 p-3 rounded-md text-xs mt-4">
           <div className="flex justify-between">
+            <span>Available File Formats</span>
+            <div className="flex gap-2 flex-wrap w-1/2 justify-end">
+              {assetModelUrl?.models?.map((i: Record<string, any>) => {
+                return (
+                  <span>.{i.key.split(".")[i.key.split(".").length - 1]}</span>
+                );
+              })}
+            </div>
+          </div>
+          <Divider className="!my-2" />
+          <div className="flex justify-between">
             <span>License</span>
             <span>Standard</span>
           </div>
@@ -421,6 +498,60 @@ export const AssetDetails = () => {
           </div>
         </div>
       </div>
+
+      {downloadModal?.open && (
+        <Modal
+          open={downloadModal?.open}
+          onCancel={closeDownloadModal}
+          footer={null}
+        >
+          <div className="p-4">Download NGON Assets</div>
+          <Divider dashed />
+          <div className="p-4 max-h-[66vh] overflow-auto">
+            <div className="flex flex-col gap-4">
+              {downloadModal?.models?.map((i: Record<string, any>) => {
+                return (
+                  <div className="p-4 flex items-center gap-4 bg-gray-50 rounded-md border-dashed border-[1px] border-slate-200">
+                    <div className="uppercase flex flex-row justify-between w-full gap-4 items-center">
+                      <div className="flex flex-col">
+                        <span>
+                          {i.key.split("/")[i.key.split("/").length - 1]}
+                        </span>
+                        <span className="text-slate-400 text-xs">
+                          {(i.size / 1024).toFixed(2)} MB
+                        </span>
+                      </div>
+                      <div
+                        className="!w-10 !h-10 flex items-center justify-center bg-slate-200 rounded-full cursor-pointer hover:bg-slate-300 transition-all"
+                        onClick={() => {
+                          downloadSelectedModel(i);
+                        }}
+                      >
+                        {downloadModal.loading ? (
+                          <ImSpinner8 className="animate-spin" />
+                        ) : (
+                          <IoArrowDownOutline size={14} />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <Divider dashed />
+          <div className="p-4">
+            <div className="flex gap-4 justify-end">
+              <Button
+                onClick={closeDownloadModal}
+                disabled={downloadModal?.loading}
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 };
