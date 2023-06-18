@@ -61,4 +61,5 @@ export interface INgonAsset {
   updatedAt: string;
   modelUrl?: string;
   priceModel?: "free" | "paid";
+  models?: Record<string, any>[];
 }

@@ -20,5 +20,5 @@ export const PrivateRoutes = ({ children, ...rest }: any) => {
     }
   }, [authLocalToken, authToken]);
 
-  return authLocalToken || authToken ? children : <Navigate to="/login" />;
+  return authLocalToken || authToken ? children : <Navigate to="/" />;
 };

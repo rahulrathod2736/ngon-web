@@ -13,3 +13,13 @@ export const showSuccessMessage = (msg: string) => {
 export const showErrorMessage = (err: any) => {
   message.error(err.message);
 };
+
+export const capitalizeSentence = (sentence: string) => {
+  const words = sentence.split(" ");
+  if (words.length === 0) return "";
+  return words
+    .map((word) => {
+      return word[0]?.toUpperCase() + word?.substring(1);
+    })
+    .join(" ");
+};

@@ -1,5 +1,3 @@
-import React from "react";
-import { useFormik } from "formik";
 import {
   Button,
   Checkbox,
@@ -14,9 +12,15 @@ import {
   Select,
   Upload,
 } from "antd";
+import { useFormik } from "formik";
+import React from "react";
+import { BiInfoCircle } from "react-icons/bi";
+import { useNavigate, useParams } from "react-router-dom";
+import { ImageUpload } from "../components/image-upload";
+import { Loader } from "../components/loader";
+import { MultiModelUpload } from "../components/model-multi-upload";
+import { StatusChip } from "../components/status-chip";
 import TooltipInputField from "../components/tooltipInputField/tooltipInputField";
-import { STRINGS } from "../utils/constants/strings";
-import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import {
   assetOnboardingDetails,
   assetUpdateByStatus,
@@ -24,13 +28,9 @@ import {
   getAssetDetailsById,
   resetAssetState,
 } from "../redux/assetOnboardingReducer";
-import { useNavigate, useParams } from "react-router-dom";
-import { Loader } from "../components/loader";
-import { StatusChip } from "../components/status-chip";
+import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { assetValidationSchema } from "../utils/constants/schema";
-import { ModelUpload } from "../components/model-upload";
-import { ImageUpload } from "../components/image-upload";
-import { BiInfoCircle } from "react-icons/bi";
+import { STRINGS } from "../utils/constants/strings";
 
 const { Option } = Select;
 const { Dragger } = Upload;
@@ -112,7 +112,7 @@ export const AssetOnboadingDetails = () => {
       tags: assetDetails?.tags || [],
       category: assetDetails?.category?.map((cat) => cat._id) || [],
       models: [],
-      priceModel: "paid",
+      priceModel: assetDetails?.priceModel || "paid",
       licenseAttribution: assetDetails?.license?.attribution || true,
       licenseNonCommercial: assetDetails?.license?.nonCommercial || false,
       licenseNoDerivatives: assetDetails?.license?.noDerivatives || false,
@@ -206,8 +206,8 @@ export const AssetOnboadingDetails = () => {
             <div className="flex flex-col gap-4">
               <Form layout="vertical">
                 <div className="w-full rounded-md">
-                  <Form.Item label={STRINGS.UPLOAD_ASSET_MODEL}>
-                    <ModelUpload id={assetDetails?._id} />
+                  <Form.Item label={STRINGS.UPLOAD_ASSET_OTHER_MODEL}>
+                    <MultiModelUpload id={assetDetails?._id || ""} />
                   </Form.Item>
                 </div>
                 <div className="w-full rounded-md">
