@@ -9,9 +9,10 @@ export const apiRoutes = {
   assetMedia: "assets/:assetId/media",
   getAssetDetails: "/assets/:assetId",
   getModelUrls: "assets/:assetId/models",
+  deleteAssetThumbnail: "assets/:assetId/image",
   deleteModelUrls: "assets/:assetId/models/:modelId",
   likeUnlikeAssets: "/assets/like/:assetId",
   submitReviews: "/assets/review/:assetId",
   submitComment: "/assets/comment/:assetId",
-  followUnfollowUsers: "/users/:userId/follow"
+  followUnfollowUsers: "/users/:userId/follow",
 };

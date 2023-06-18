@@ -84,17 +84,23 @@ export const ProfilePage = () => {
                       )}
                     />
                   </div>
-                  <Divider className="border-slate-500" dashed />
-                  <div className="flex flex-col items-start">
-                    <span>Most used Tags</span>
-                    <span className="mt-2 flex flex-wrap gap-y-2">
-                      {userProfile?.tags?.map((t: string) => {
-                        return (
-                          <Tag className="text-white bg-slate-600">{t}</Tag>
-                        );
-                      })}
-                    </span>
-                  </div>
+                  {userProfile?.tags?.length > 0 ? (
+                    <>
+                      <Divider className="border-slate-500" dashed />
+                      <div className="flex flex-col items-start">
+                        <span>Most used Tags</span>
+                        <span className="mt-2 flex flex-wrap gap-y-2">
+                          {userProfile?.tags?.map((t: string) => {
+                            return (
+                              <Tag className="text-white bg-slate-600">{t}</Tag>
+                            );
+                          })}
+                        </span>
+                      </div>
+                    </>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </div>
             </Col>

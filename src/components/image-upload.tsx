@@ -83,8 +83,15 @@ export const ImageUpload = ({ id }: { id: string }) => {
     }
   };
 
-  const reuploadModel = () => {
-    setUrl(null);
+  const reuploadModel = async () => {
+    try {
+      await axiosInstance.delete(
+        apiRoutes.deleteAssetThumbnail.replace(":assetId", id)
+      );
+      setUrl(null);
+    } catch (err: any) {
+      console.log(err.message);
+    }
   };
 
   return (

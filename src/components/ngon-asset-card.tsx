@@ -2,6 +2,7 @@ import { FiEdit } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import { INgonAsset } from "../utils/interface";
 import { RootState, useAppSelector } from "../redux/store";
+import { capitalizeSentence } from "../utils/functions";
 
 interface IProps {
   asset: INgonAsset;
@@ -40,7 +41,7 @@ export const NgonAssetCard = ({ asset, className }: IProps) => {
             to={`/assets/${asset._id}`}
             className="text-black hover:text-black underline"
           >
-            {asset.name}
+            {capitalizeSentence(asset.name)}
           </Link>
         </span>
         <span className="text-xs text-gray-400 leading-normal line-clamp-2">
