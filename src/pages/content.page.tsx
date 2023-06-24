@@ -75,14 +75,15 @@ export const ContentPage = () => {
           <ModelViewer modelUrl="https://ngon-assets-images.s3.ap-south-1.amazonaws.com/home-model.glb" />
         </div>
       </div>
-      <div className="h-[400px] bg-white flex items-start">
-        <div className="w-1/2 flex items-center justify-center h-full">
-          <img src={JoinNgon} />
+      
+      <div className="md:h-[400px] w-full bg-white flex flex-col md:flex-row items-start gap-5 md:gap-0">
+        <div className="w-full md:w-1/2 flex items-center justify-center h-full">
+          <img className="w-full md:w-auto" src={JoinNgon} />
         </div>
-        <div className="w-1/2  flex items-center justify-start bg-[#0D1F47] h-full text-white">
-          <div className="flex items-start gap-6 flex-col mx-20">
+        <div className="md:w-1/2 flex items-center justify-start p-8 lg:px-28 bg-[#0D1F47] h-full text-white">
+          <div className="flex items-start gap-6 flex-col">
             <div className="text-xl">Join NGON to Live in 3D World</div>
-            <div className="w-2/3">
+            <div className="md:w-2/3">
               Join NGON to utilise your 3D skills to create innovative 3D models
               to discover 3D models which suits the demands of your business.
             </div>
@@ -95,11 +96,12 @@ export const ContentPage = () => {
           </div>
         </div>
       </div>
-      <div className="h-[400px] bg-white flex items-start">
-        <div className="w-1/2  flex items-center justify-start bg-[#FCB25D] h-full text-white">
-          <div className="flex items-start gap-6 flex-col mx-20">
+
+      <div className="md:h-[400px] w-full bg-white flex flex-col md:flex-row items-start gap-5 md:gap-0">
+        <div className="md:w-1/2 flex items-center justify-start p-8 lg:px-28 bg-[#FCB25D] h-full text-white order-2 md:order-1">
+          <div className="flex items-start gap-6 flex-col">
             <div className="text-xl">Buy and Sell Models with Ngon</div>
-            <div className="w-2/3">
+            <div className="md:w-2/3">
               Upload your Models for sell and increase your income buy uploading free or paid innovative models
             </div>
             <Button
@@ -110,18 +112,19 @@ export const ContentPage = () => {
             </Button>
           </div>
         </div>
-        <div className="w-1/2 flex items-center justify-center h-full">
-          <img src={BuyModels} />
+        <div className="w-full max-w-full md:w-1/2 flex items-center justify-center h-full order-1 md:order-2">
+          <img className="w-full" src={BuyModels} />
         </div>
       </div>
-      <div className="h-[400px] bg-white flex items-start">
-        <div className="w-1/2 flex items-center justify-center h-full">
-          <img src={ShowArt} />
+
+      <div className="md:h-[400px] w-full bg-white flex flex-col md:flex-row items-start gap-5 md:gap-0">
+        <div className="w-full md:w-1/2 flex items-center justify-center h-full">
+          <img className="w-full md:w-auto" src={ShowArt} />
         </div>
-        <div className="w-1/2  flex items-center justify-start bg-[#0D1F47] h-full text-white">
-          <div className="flex items-start gap-6 flex-col mx-20">
+        <div className="md:w-1/2 flex items-center justify-start p-8 lg:px-28 bg-[#0D1F47] h-full text-white">
+          <div className="flex items-start gap-6 flex-col">
             <div className="text-xl">Share and Exhibit Your work</div>
-            <div className="w-2/3">
+            <div className="md:w-2/3">
               Are you creative 3D Artist?? Show your creative and Innovative art to ourb audience and generate massive incomes.
             </div>
             <Button
@@ -135,11 +138,12 @@ export const ContentPage = () => {
           </div>
         </div>
       </div>
-      <div className="h-[400px] bg-white flex items-start">
-        <div className="w-1/2  flex items-center justify-start bg-[#F5663A] h-full text-white">
-          <div className="flex items-start gap-6 flex-col mx-20">
+
+      <div className="md:h-[400px] w-full bg-white flex flex-col md:flex-row items-start gap-5 md:gap-0">
+        <div className="md:w-1/2 flex items-center justify-start p-8 lg:px-28 bg-[#F5663A] h-full text-white order-2 md:order-1">
+          <div className="flex items-start gap-6 flex-col">
             <div className="text-xl">Join First Open Source 3D Platform</div>
-            <div className="w-2/3">
+            <div className="md:w-2/3">
               In future, We are planning to introduce feature called Open source for contribution.
             </div>
             <Button
@@ -152,18 +156,19 @@ export const ContentPage = () => {
             </Button>
           </div>
         </div>
-        <div className="w-1/2 flex items-center justify-center h-full">
-          <img src={OpenSource} />
+        <div className="w-full md:w-1/2 flex items-center justify-center h-full order-1 md:order-2">
+          <img className="w-full md:w-auto" src={OpenSource} />
         </div>
       </div>
-      <div className="h-[400px] bg-white flex items-start">
-        <div className="w-1/2 flex items-center justify-center h-full">
-          <img src={ConnectArtists} />
+
+      <div className="md:h-[400px] w-full bg-white flex flex-col md:flex-row items-start gap-5 md:gap-0">
+        <div className="w-full md:w-1/2 flex items-center justify-center h-full">
+          <img className="w-full md:w-auto" src={ConnectArtists} />
         </div>
-        <div className="w-1/2  flex items-center justify-start bg-[#616161] h-full text-white">
-          <div className="flex items-start gap-6 flex-col mx-20">
+        <div className="md:w-1/2 flex items-center justify-start p-8 lg:px-28 bg-[#616161] h-full text-white">
+          <div className="flex items-start gap-6 flex-col">
             <div className="text-xl">Meet and Learn From Artists</div>
-            <div className="w-2/3">
+            <div className="md:w-2/3">
               Excited to connect with innovatove artists. Explore your network and share experience.
             </div>
             <Button
@@ -177,9 +182,11 @@ export const ContentPage = () => {
           </div>
         </div>
       </div>
-      <div className="p-6 bg-[#066D42] text-white text-xl text-center">
+
+      <div className="p-6 bg-[#066D42] text-white text-xl text-center mt-8">
         Become a seller at Ngon
       </div>
+
     </div>
   );
 };
