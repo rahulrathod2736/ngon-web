@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { AnalyticsWrapper } from "../components/analytics-viewwrapper";
 import { AuthModal } from "../components/auth-modal";
-import { Header } from "../components/header";
+import { Header } from "../components/header/header";
 import { useAnalytics } from "../hooks/useAnalytics";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { getCategories, getProfile, setToken } from "../redux/userReducer";
@@ -109,9 +109,9 @@ export const HomePage = () => {
     <>
       <AntdLayout className="bg-white h-screen w-screen">
         <AntdLayout>
-          <AntdHeader className="!bg-white">
+          {/* <AntdHeader className="!bg-white overflow-hidden" style={{paddingInline:"1em"}}> */}
             <Header />
-          </AntdHeader>
+          {/* </AntdHeader> */}
           <Content className="bg-[#fafbfe] p-4 text-black h-screen overflow-auto">
             <div>
 

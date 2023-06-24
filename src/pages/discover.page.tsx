@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { FiShoppingCart, FiUploadCloud } from "react-icons/fi";
-import { Header } from "../components/header";
+import { Header } from "../components/header/header";
 
 export const DiscoverPage = () => {
   return (
