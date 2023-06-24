@@ -73,11 +73,17 @@ export const LoginPage = ({
       <div
         className={
           isFullScreen
-            ? "flex items-center justify-center w-screen bg-white h-screen"
+            ? "flex items-end sm:items-center justify-center w-screen bg-white h-screen"
             : ""
         }
       >
-        <div className="border-[1px] border-dashed border-slate-300 rounded-md bg-white drop-shadow-xl min-w-[75%] sm:min-w-[50%] lg:min-w-[33%] py-4">
+
+        <div className=
+          {
+            "border-[1px] border-dashed border-slate-300 rounded-md bg-white drop-shadow-xl sm:min-w-[50%] lg:min-w-[33%] py-4 "
+            + (isFullScreen ? "  w-full sm:w-fit  mx-4 " : " w-full ")
+          }
+        >
           <div className="text-center mb-4 px-4 text-black">Login</div>
           <Divider dashed />
           <div className="my-4 px-4 text-black">Welcome to Ngon</div>
@@ -118,7 +124,7 @@ export const LoginPage = ({
               Login
             </Button>
           </Form>
-          <div className="text-right m-4">
+          <div className="text-center md:text-right m-4">
             <span className="link" onClick={handleCreateAccount}>
               Create an account
             </span>
@@ -138,6 +144,7 @@ export const LoginPage = ({
             </Button>
           </div> */}
         </div>
+
       </div>
     </>
   );
