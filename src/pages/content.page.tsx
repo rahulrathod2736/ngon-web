@@ -42,13 +42,13 @@ export const ContentPage = () => {
     }
   };
   return (
-    <div className="-m-4 bg-white">
-      <div className="h-[66vh] bg-white flex items-center justify-center">
+    <div className="bg-white">
+      <div className="h-[80vh] md:h-[66vh] bg-white flex items-center justify-center">
         <div className="flex flex-col items-center gap-6">
-          <NGONLogo className="w-80 h-48" />
-          <div className="flex gap-6">
+          <NGONLogo className="w-full md:w-80 h-48" />
+          <div className="flex flex-wrap md:flex-nowrap gap-6">
             <Input
-              className="min-w-[500px] rounded-full pl-5"
+              className="w-full md:min-w-[500px] rounded-full pl-5"
               placeholder="Search your query here..."
               size="large"
               value={searchQuery}
@@ -57,7 +57,7 @@ export const ContentPage = () => {
               }}
             />
             <Button
-              className="!rounded-full !px-8"
+              className="!rounded-full w-full md:w-auto !px-8"
               type="primary"
               size="large"
               onClick={handleSearchValue}

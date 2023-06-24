@@ -110,9 +110,9 @@ export const HomePage = () => {
       <AntdLayout className="bg-white h-screen w-screen">
         <AntdLayout>
           {/* <AntdHeader className="!bg-white overflow-hidden" style={{paddingInline:"1em"}}> */}
-            <Header />
+          <Header />
           {/* </AntdHeader> */}
-          <Content className="bg-[#fafbfe] p-4 text-black h-screen overflow-auto">
+          <Content className="bg-[#fafbfe] p-4 text-black h-screen overflow-auto pt-0">
             <div>
 
               <AnalyticsWrapper initialized={initialized}>
