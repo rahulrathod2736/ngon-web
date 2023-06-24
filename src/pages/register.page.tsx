@@ -80,7 +80,7 @@ export const RegisterPage = ({
       <div
         className={
           isFullScreen
-            ? "flex items-center justify-center w-screen bg-white h-screen"
+            ? "flex items-end sm:items-center pb-7 justify-center w-screen bg-white h-screen"
             : ""
         }
       >
@@ -90,8 +90,12 @@ export const RegisterPage = ({
           </div>
           <Divider dashed />
           <Form layout="vertical" className="px-4 gap-2 mt-4">
-            <Row gutter={[12, 12]}>
-              <Col span={12}>
+            <Row gutter={
+              {
+                sm: 12,
+              }
+            }>
+              <Col span={24} md={12}>
                 <Form.Item>
                   <TooltipInputField
                     message={errors.firstName ? errors.firstName : null}
@@ -107,7 +111,7 @@ export const RegisterPage = ({
                   </TooltipInputField>
                 </Form.Item>
               </Col>
-              <Col span={12}>
+              <Col span={24} md={12}>
                 <Form.Item>
                   <TooltipInputField
                     message={errors.lastName ? errors.lastName : null}
