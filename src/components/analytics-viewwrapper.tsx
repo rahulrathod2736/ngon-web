@@ -1,21 +1,29 @@
-import * as React from 'react';
+import * as React from "react";
 import ReactGa from "react-ga";
-import { useLocation } from 'react-router';
+import { useLocation } from "react-router";
+
+declare global {
+  interface Window {
+    gtag: any;
+  }
+}
 
 interface IWrapperProps {
-    initialized: boolean;
-    children: React.PropsWithChildren<any>;
+  initialized: boolean;
+  children: React.PropsWithChildren<any>;
 }
 
 export function AnalyticsWrapper(props: IWrapperProps) {
-    const location = useLocation();
+  const location = useLocation();
 
-    React.useEffect(() => {
-        if (props.initialized) {
-            ReactGa.pageview(location.pathname + location.search);
-        }
-    }, [props.initialized, location]);
+  React.useEffect(() => {
+    console.log("Event logged");
+    window.gtag("event", "page_view", {
+      page_title: "title",
+      page_path: location.pathname + location.search,
+      page_location: window.location.href,
+    });
+  }, [location]);
 
-    return props.children;
-
+  return props.children;
 }
