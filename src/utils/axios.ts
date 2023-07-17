@@ -3,9 +3,7 @@ import axios from "axios";
 const version = "v1";
 
 export const axiosInstance = axios.create({
-  baseURL:
-    "http://localhost:3000/v1" ||
-    `${import.meta.env.VITE_NGON_API_URL}/${version}`,
+  baseURL: `${import.meta.env.VITE_NGON_API_URL}/${version}`,
 });
 
 axiosInstance.interceptors.request.use((config) => {

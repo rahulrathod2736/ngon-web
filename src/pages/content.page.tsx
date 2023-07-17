@@ -83,7 +83,7 @@ export const ContentPage = () => {
           <div className="flex items-start gap-6 flex-col mx-20">
             <div className="text-xl">Join NGON to Live in 3D World</div>
             <div className="w-2/3">
-              Join NGON to utilise your 3D skills to create innovative 3D models
+              Join NGON to utilize your 3D skills to create innovative 3D models
               to discover 3D models which suits the demands of your business.
             </div>
             <Button
@@ -98,7 +98,7 @@ export const ContentPage = () => {
       <div className="h-[400px] bg-white flex items-start">
         <div className="w-1/2  flex items-center justify-start bg-[#FCB25D] h-full text-white">
           <div className="flex items-start gap-6 flex-col mx-20">
-            <div className="text-xl">Buy and Sell Models with Ngon</div>
+            <div className="text-xl">Buy and Sell Models with NGON</div>
             <div className="w-2/3">
               Upload your Models for sell and increase your income buy uploading free or paid innovative models
             </div>
@@ -122,7 +122,7 @@ export const ContentPage = () => {
           <div className="flex items-start gap-6 flex-col mx-20">
             <div className="text-xl">Share and Exhibit Your work</div>
             <div className="w-2/3">
-              Are you creative 3D Artist?? Show your creative and Innovative art to ourb audience and generate massive incomes.
+              Are you creative 3D Artist?? Show your creative and Innovative art to our audience and generate massive incomes.
             </div>
             <Button
               className="!rounded-full !px-4 !border-white hover:!text-black"
@@ -164,7 +164,7 @@ export const ContentPage = () => {
           <div className="flex items-start gap-6 flex-col mx-20">
             <div className="text-xl">Meet and Learn From Artists</div>
             <div className="w-2/3">
-              Excited to connect with innovatove artists. Explore your network and share experience.
+              Excited to connect with innovative artists. Explore your network and share experience.
             </div>
             <Button
               className="!rounded-full !px-4 !border-white hover:!text-black"
@@ -178,7 +178,7 @@ export const ContentPage = () => {
         </div>
       </div>
       <div className="p-6 bg-[#066D42] text-white text-xl text-center">
-        Become a seller at Ngon
+        Become a seller at NGON
       </div>
     </div>
   );
