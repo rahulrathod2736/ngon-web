@@ -1,9 +1,6 @@
 import { Button, Divider, Form, Input } from "antd";
 import { useFormik } from "formik";
 import { useEffect } from "react";
-import { FaFacebookSquare } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
-import { GrLinkedinOption } from "react-icons/gr";
 import { useLocation, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import TooltipInputField from "../components/tooltipInputField/tooltipInputField";

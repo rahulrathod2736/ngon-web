@@ -1,9 +1,11 @@
 import axios from "axios";
 
-const version = 'v1';
+const version = "v1";
 
 export const axiosInstance = axios.create({
-  baseURL: `${import.meta.env.VITE_NGON_API_URL}/${version}`,
+  baseURL:
+    "http://localhost:3000/v1" ||
+    `${import.meta.env.VITE_NGON_API_URL}/${version}`,
 });
 
 axiosInstance.interceptors.request.use((config) => {
@@ -24,7 +26,7 @@ axiosInstance.interceptors.response.use(
       if (er.response) {
         if (er.response.status == 401) {
           localStorage.removeItem("ngon:token");
-          window.location.href = "/" // <-- navigate
+          window.location.href = "/"; // <-- navigate
         }
       }
     }

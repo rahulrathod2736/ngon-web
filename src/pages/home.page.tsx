@@ -15,6 +15,7 @@ import { AssetsPage } from "./assets.page";
 import { ContentPage } from "./content.page";
 import MarketplacePage from "./marketplace.page";
 import { ProfilePage } from "./profile.page";
+import EditProfilePage from "./edit-profile.page";
 
 const { Sider, Content, Header: AntdHeader } = AntdLayout;
 
@@ -163,6 +164,14 @@ export const HomePage = () => {
                     element={
                       <PrivateRoutes>
                         <ProfilePage />
+                      </PrivateRoutes>
+                    }
+                  />
+                  <Route
+                    path={STRINGS.EDIT_PROFILE_PATH}
+                    element={
+                      <PrivateRoutes>
+                        <EditProfilePage />
                       </PrivateRoutes>
                     }
                   />

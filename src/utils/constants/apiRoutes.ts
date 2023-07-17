@@ -3,6 +3,8 @@ export const apiRoutes = {
   loginUser: "/authentication/signin",
   verifyCode: "/authentication/verification",
   getProfile: "/users/profile",
+  updateProfile: "/users/profile",
+  uploadProfileImage: "/users/profile/upload",
   getCategories: "/categories",
   uploadAssetModel: "/asset-onboarding/upload",
   assets: "/assets",
