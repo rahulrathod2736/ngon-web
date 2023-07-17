@@ -1,4 +1,4 @@
-import { Avatar, Button, Divider, Popover } from "antd";
+import { Avatar, Button, Divider, Popover, Tag } from "antd";
 import { FiShoppingCart, FiUploadCloud } from "react-icons/fi";
 import { NavLink, useNavigate } from "react-router-dom";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
@@ -57,11 +57,12 @@ export const Header = () => {
   };
   return (
     <div className="flex justify-between items-center w-full bg-white">
-      <div className="h-10">
+      <div className="h-12 flex items-start">
         <NGONLogo
           className="w-24 h-12 cursor-pointer"
           onClick={navigateToHome}
         />
+        <Tag className="!border-0">Beta</Tag>
       </div>
       <div className="">
         <div className="flex items-center gap-8">
