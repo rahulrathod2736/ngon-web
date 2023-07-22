@@ -2,7 +2,9 @@ import { FiEdit } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import { INgonAsset } from "../utils/interface";
 import { RootState, useAppSelector } from "../redux/store";
-import { capitalizeSentence } from "../utils/functions";
+import { capitalizeSentence, getFullName } from "../utils/functions";
+import { Avatar, Tooltip } from "antd";
+import React from "react";
 
 interface IProps {
   asset: INgonAsset;
@@ -35,18 +37,33 @@ export const NgonAssetCard = ({ asset, className }: IProps) => {
           <></>
         )}
       </div>
-      <div className="p-4 flex flex-col">
-        <span className="">
-          <Link
-            to={`/assets/${asset._id}`}
-            className="text-black hover:text-black underline"
-          >
-            {capitalizeSentence(asset.name)}
-          </Link>
-        </span>
-        <span className="text-xs text-gray-400 leading-normal line-clamp-2">
-          {asset.description}
-        </span>
+      <div className={"flex flex-row p-4 items-center"}>
+        <div className="px-2 flex flex-col flex-1">
+          <span className="">
+            <Link
+              to={`/assets/${asset._id}`}
+              className="text-black hover:text-black underline"
+            >
+              {capitalizeSentence(asset.name)}
+            </Link>
+          </span>
+          <span className="text-xs text-gray-400 leading-normal line-clamp-2">
+            {asset.description}
+          </span>
+        </div>
+        <Tooltip title={getFullName(asset?.user || {})} placement={"bottom"}>
+          {asset?.user?.profileImage ? (
+            <Avatar
+              src={asset?.user?.profileImage}
+              size={35}
+              className={"cover"}
+            />
+          ) : (
+            <Avatar size={35} className={"uppercase"}>
+              {asset?.user?.firstName?.[0] || ""}
+            </Avatar>
+          )}
+        </Tooltip>
       </div>
     </div>
   );

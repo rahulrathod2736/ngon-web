@@ -2,6 +2,7 @@ import { Avatar, Button, Rate } from "antd";
 import { IReview } from "../utils/interface";
 import { getFullName } from "../utils/functions";
 import { AiFillHeart } from "react-icons/ai";
+import React from "react";
 
 interface IProps {
   reviews: IReview[];
@@ -15,11 +16,22 @@ export const Reviews = ({ reviews }: IProps) => {
           <div className="flex flex-row justify-between items-center mb-8">
             <div className="flex flex-row items-center">
               <div>
-                <Avatar
-                  src="https://picsum.photos/500/300?random=1"
-                  shape="square"
-                  className="rounded-xl drop-shadow-xl w-14 h-14"
-                />
+                {review.user.profileImage ? (
+                  <Avatar
+                    src={review.user.profileImage}
+                    shape="square"
+                    className="rounded-xl drop-shadow-xl"
+                    size={35}
+                  />
+                ) : (
+                  <Avatar
+                    shape="square"
+                    className="rounded-xl drop-shadow-xl"
+                    size={45}
+                  >
+                    {review.user.firstName[0]}
+                  </Avatar>
+                )}
               </div>
               <div className="ml-4">
                 <div className="">{getFullName(review.user)}</div>

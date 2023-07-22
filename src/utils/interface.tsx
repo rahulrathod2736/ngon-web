@@ -7,6 +7,7 @@ export interface IUser {
   isVerified: boolean;
   createdAt: string;
   updatedAt: string;
+  profileImage?: string;
 }
 
 export interface ICategory {
@@ -20,21 +21,13 @@ export interface ICategory {
 export interface IReview {
   rating: number;
   review: string;
-  user: {
-    _id: string;
-    firstName: string;
-    lastName: string;
-  };
+  user: IUser;
   _id: string;
 }
 
 export interface IComment {
   comment: string;
-  user: {
-    _id: string;
-    firstName: string;
-    lastName: string;
-  };
+  user: IUser;
   _id: string;
 }
 

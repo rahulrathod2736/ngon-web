@@ -100,9 +100,17 @@ export const Header = () => {
               placement="bottomRight"
               arrow={{ arrowPointAtCenter: true }}
             >
-              <Avatar className="cursor-pointer" size={35}>
-                {userProfile?.firstName?.[0] || ""}
-              </Avatar>
+              {userProfile?.profileImage ? (
+                <Avatar
+                  className="cursor-pointer"
+                  size={35}
+                  src={userProfile?.profileImage}
+                />
+              ) : (
+                <Avatar className="cursor-pointer" size={35}>
+                  {userProfile?.firstName?.[0] || ""}
+                </Avatar>
+              )}
             </Popover>
           )}
         </div>
