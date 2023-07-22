@@ -4,14 +4,14 @@ import {
   Button,
   Divider,
   Input,
+  message,
   Modal,
   Rate,
   Tabs,
   Tag,
-  message,
 } from "antd";
 import moment from "moment";
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ReactGa from "react-ga";
 import { AiFillHeart, AiOutlineComment } from "react-icons/ai";
 import { FaGooglePay } from "react-icons/fa";
@@ -24,16 +24,12 @@ import { useParams } from "react-router-dom";
 import { Comments } from "../components/comments";
 import { ModelViewer } from "../components/model-viewer";
 import { Reviews } from "../components/reviews";
-import {
-  likeUnlikeById,
-  submitComment,
-  submitReviews,
-} from "../redux/assetReducer";
+import { submitComment, submitReviews } from "../redux/assetReducer";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { followUnfollowUsers } from "../redux/userReducer";
 import { axiosInstance } from "../utils/axios";
 import { apiRoutes } from "../utils/constants/apiRoutes";
-import { getFullName } from "../utils/functions";
+import { currencyFormatter, getFullName } from "../utils/functions";
 import { INgonAsset } from "../utils/interface";
 
 export const AssetDetails = () => {
@@ -106,8 +102,17 @@ export const AssetDetails = () => {
     }
   };
 
-  const likeUnlikeAssets = () => {
-    dispatch(likeUnlikeById({ id }));
+  const likeUnlikeAssets = async () => {
+    try {
+      if (id) {
+        const resp = await axiosInstance.put(
+          `${apiRoutes.likeUnlikeAssets.replace(":assetId", id)}`
+        );
+        setAssetDetails(resp?.data?.data || {});
+      }
+    } catch (err: any) {
+      message.error(err?.message || "Something went Wrong!");
+    }
   };
 
   const followUnfollowUsersById = () => {
@@ -234,11 +239,22 @@ export const AssetDetails = () => {
           <div className="flex flex-row justify-between items-center mt-4">
             <div className="flex flex-row items-center">
               <div>
-                <Avatar
-                  src="https://picsum.photos/500/300?random=1"
-                  shape="square"
-                  className="rounded-xl drop-shadow-xl w-14 h-14"
-                />
+                {assetDetails?.user?.profileImage ? (
+                  <Avatar
+                    src={assetDetails.user.profileImage}
+                    shape="square"
+                    className="rounded-xl drop-shadow-xl"
+                    size={45}
+                  />
+                ) : (
+                  <Avatar
+                    shape="square"
+                    className="rounded-xl drop-shadow-xl"
+                    size={45}
+                  >
+                    {assetDetails?.user?.firstName[0]}
+                  </Avatar>
+                )}
               </div>
               <div className="ml-4">
                 <div>{getFullName(assetDetails?.user || {})}</div>
@@ -420,7 +436,9 @@ export const AssetDetails = () => {
           </div>
         ) : (
           <div>
-            <div className="text-xl">Rs. {assetDetails?.price}</div>
+            <div className="text-xl">
+              {currencyFormatter(assetDetails?.price ?? 0)}
+            </div>
             <div className="mt-2">
               <ul className="list-inside">
                 <li>Get all Updated versions</li>

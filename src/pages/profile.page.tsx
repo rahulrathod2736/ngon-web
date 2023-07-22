@@ -1,6 +1,6 @@
 import { Avatar, Col, Divider, Row, Tabs, TabsProps, Tag, Tooltip } from "antd";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdOutlineEditNote } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { Projects } from "../components/projects";

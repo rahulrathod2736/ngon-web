@@ -1,6 +1,7 @@
 import { Avatar, Button } from "antd";
 import { IComment } from "../utils/interface";
 import { getFullName } from "../utils/functions";
+import React from "react";
 
 interface IProps {
   comments: IComment[];
@@ -14,11 +15,22 @@ export const Comments = ({ comments }: IProps) => {
           <div className="flex flex-row justify-between items-center mb-8">
             <div className="flex flex-row items-center">
               <div>
-                <Avatar
-                  src="https://picsum.photos/500/300?random=1"
-                  shape="square"
-                  className="rounded-xl drop-shadow-xl w-14 h-14"
-                />
+                {comment.user.profileImage ? (
+                  <Avatar
+                    src={comment.user.profileImage}
+                    shape="square"
+                    className="rounded-xl drop-shadow-xl"
+                    size={45}
+                  />
+                ) : (
+                  <Avatar
+                    shape="square"
+                    className="rounded-xl drop-shadow-xl"
+                    size={45}
+                  >
+                    {comment.user.firstName[0]}
+                  </Avatar>
+                )}
               </div>
               <div className="ml-4">
                 <div className="">{getFullName(comment?.user)}</div>
