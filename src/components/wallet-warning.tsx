@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
-import { STRINGS } from "../utils/constants/strings";
-import { AiOutlineClose } from "react-icons/all";
-import { RootState, useAppSelector } from "../redux/store";
 import { useState } from "react";
+import { AiOutlineClose } from "react-icons/all";
+import { Link } from "react-router-dom";
+import { RootState, useAppSelector } from "../redux/store";
+import { STRINGS } from "../utils/constants/strings";
 
 import { useLocation } from "react-router";
 
@@ -39,5 +39,6 @@ export const WalletWarning = () => {
       </div>
     );
   }
-  return;
+  
+  return <></>;
 };

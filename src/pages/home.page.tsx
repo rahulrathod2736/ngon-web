@@ -1,26 +1,26 @@
-import { Divider, Layout as AntdLayout } from "antd";
+import { Layout as AntdLayout, Divider } from "antd";
 import { useEffect } from "react";
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { AnalyticsWrapper } from "../components/analytics-viewwrapper";
 import { AuthModal } from "../components/auth-modal";
+import { Footer } from "../components/footer";
 import { Header } from "../components/header";
+import { WalletWarning } from "../components/wallet-warning";
 import { useAnalytics } from "../hooks/useAnalytics";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { getCategories, getProfile, setToken } from "../redux/userReducer";
 import { PrivateRoutes } from "../routes/privateRoutes";
-import { STRINGS } from "../utils/constants/strings";
 import { AssetDetails } from "./asset-details.page";
 import { AssetOnboadingDetails } from "./asset-onboarding-details.page";
 import { AssetsPage } from "./assets.page";
 import { ContentPage } from "./content.page";
-import MarketplacePage from "./marketplace.page";
-import { ProfilePage } from "./profile.page";
 import EditProfilePage from "./edit-profile.page";
+import MarketplacePage from "./marketplace.page";
+import { PrivacyPolicyPage } from "./privacy-policy.page";
+import { ProfilePage } from "./profile.page";
 import { WalletPage } from "./wallet.page";
-import { AiOutlineClose } from "react-icons/all";
-import { WalletWarning } from "../components/wallet-warning";
 
-const { Sider, Content, Header: AntdHeader } = AntdLayout;
+const { Content, Header: AntdHeader, Footer: AntdFooter } = AntdLayout;
 
 const NotificationPopOver = () => {
   return (
@@ -113,88 +113,91 @@ export const HomePage = () => {
 
   return (
     <>
-      <AntdLayout className="bg-white h-screen w-screen">
-        <AntdLayout>
-          <AntdHeader className="!bg-white">
-            <Header />
-          </AntdHeader>
-          <Content className="bg-[#fafbfe] text-black h-screen overflow-auto">
-            <>
-              <WalletWarning />
-              <div className={"p-4"}>
-                <AnalyticsWrapper initialized={initialized}>
-                  <Routes>
-                    <Route
-                      path={"/marketplace"}
-                      element={
-                        <PrivateRoutes>
-                          <MarketplacePage />
-                        </PrivateRoutes>
-                      }
-                    />
-                    <Route
-                      path={"/assets"}
-                      element={
-                        <PrivateRoutes>
-                          <AssetsPage />
-                        </PrivateRoutes>
-                      }
-                    />
-                    <Route
-                      path={"/asset-onboarding/details"}
-                      element={
-                        <PrivateRoutes>
-                          <AssetOnboadingDetails />
-                        </PrivateRoutes>
-                      }
-                    />
-                    <Route
-                      path={"/asset-onboarding/details/:id"}
-                      element={
-                        <PrivateRoutes>
-                          <AssetOnboadingDetails />
-                        </PrivateRoutes>
-                      }
-                    />
-                    <Route
-                      path={"/assets/:id"}
-                      element={
-                        <PrivateRoutes>
-                          <AssetDetails />
-                        </PrivateRoutes>
-                      }
-                    />
-                    <Route path={STRINGS.BASE_PATH} element={<ContentPage />} />
-                    <Route
-                      path={STRINGS.PROFILE_PATH}
-                      element={
-                        <PrivateRoutes>
-                          <ProfilePage />
-                        </PrivateRoutes>
-                      }
-                    />
-                    <Route
-                      path={STRINGS.EDIT_PROFILE_PATH}
-                      element={
-                        <PrivateRoutes>
-                          <EditProfilePage />
-                        </PrivateRoutes>
-                      }
-                    />
-                    <Route
-                      path={STRINGS.WALLET_PATH}
-                      element={
-                        <PrivateRoutes>
-                          <WalletPage />
-                        </PrivateRoutes>
-                      }
-                    />
-                  </Routes>
-                </AnalyticsWrapper>
-              </div>
-            </>
-          </Content>
-        </AntdLayout>
+      <AntdLayout>
+        <AntdHeader className="!bg-white fixed z-[1000] w-screen">
+          <Header />
+        </AntdHeader>
+        <Content className="content bg-[#fafbfe] p-4 text-black overflow-auto !mt-16">
+          <div>
+            <WalletWarning />
+            <AnalyticsWrapper initialized={initialized}>
+              <Routes>
+                <Route
+                  path={"/marketplace"}
+                  element={
+                    <PrivateRoutes>
+                      <MarketplacePage />
+                    </PrivateRoutes>
+                  }
+                />
+                <Route path={"/"} element={<ContentPage />} />
+                <Route
+                  path={"/assets"}
+                  element={
+                    <PrivateRoutes>
+                      <AssetsPage />
+                    </PrivateRoutes>
+                  }
+                />
+                <Route
+                  path={"/asset-onboarding/details"}
+                  element={
+                    <PrivateRoutes>
+                      <AssetOnboadingDetails />
+                    </PrivateRoutes>
+                  }
+                />
+                <Route
+                  path={"/asset-onboarding/details/:id"}
+                  element={
+                    <PrivateRoutes>
+                      <AssetOnboadingDetails />
+                    </PrivateRoutes>
+                  }
+                />
+                <Route
+                  path={"/assets/:id"}
+                  element={
+                    <PrivateRoutes>
+                      <AssetDetails />
+                    </PrivateRoutes>
+                  }
+                />
+                <Route
+                  path={"/profile"}
+                  element={
+                    <PrivateRoutes>
+                      <ProfilePage />
+                    </PrivateRoutes>
+                  }
+                />
+                <Route
+                  path={"/profile/edit"}
+                  element={
+                    <PrivateRoutes>
+                      <EditProfilePage />
+                    </PrivateRoutes>
+                  }
+                />
+                <Route
+                  path={"/privacy-policy"}
+                  element={<PrivacyPolicyPage />}
+                />
+                <Route
+                  path={"/wallet"}
+                  element={
+                    <PrivateRoutes>
+                      <WalletPage />
+                    </PrivateRoutes>
+                  }
+                />
+              </Routes>
+            </AnalyticsWrapper>
+          </div>
+        </Content>
+        <AntdFooter>
+          <Footer />
+        </AntdFooter>
       </AntdLayout>
       <AuthModal />
     </>
