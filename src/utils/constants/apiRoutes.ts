@@ -17,4 +17,8 @@ export const apiRoutes = {
   submitReviews: "/assets/review/:assetId",
   submitComment: "/assets/comment/:assetId",
   followUnfollowUsers: "/users/:userId/follow",
+  getUserWallet: "/wallet",
+  getUserWalletTransactions: "/wallet/transactions",
+  addMoneyToWalletRequest: "/wallet/add-money",
+  initializeWallet: "/wallet/initialize"
 };

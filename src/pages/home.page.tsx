@@ -1,6 +1,6 @@
-import { Layout as AntdLayout, Divider } from "antd";
+import { Divider, Layout as AntdLayout } from "antd";
 import { useEffect } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import { AnalyticsWrapper } from "../components/analytics-viewwrapper";
 import { AuthModal } from "../components/auth-modal";
 import { Header } from "../components/header";
@@ -16,6 +16,9 @@ import { ContentPage } from "./content.page";
 import MarketplacePage from "./marketplace.page";
 import { ProfilePage } from "./profile.page";
 import EditProfilePage from "./edit-profile.page";
+import { WalletPage } from "./wallet.page";
+import { AiOutlineClose } from "react-icons/all";
+import { WalletWarning } from "../components/wallet-warning";
 
 const { Sider, Content, Header: AntdHeader } = AntdLayout;
 
@@ -63,6 +66,8 @@ const ProfilePopover = () => {
       <div className="px-4 py-2 hover:bg-slate-100 cursor-pointer ">
         Profile
       </div>
+      <Divider dashed />
+      <div className="px-4 py-2 hover:bg-slate-100 cursor-pointer">Wallet</div>
       <Divider dashed />
       <div className="px-4 py-2 hover:bg-slate-100 cursor-pointer">
         Settings
@@ -113,74 +118,84 @@ export const HomePage = () => {
           <AntdHeader className="!bg-white">
             <Header />
           </AntdHeader>
-          <Content className="bg-[#fafbfe] p-4 text-black h-screen overflow-auto">
-            <div>
-
-              <AnalyticsWrapper initialized={initialized}>
-                <Routes>
-                  <Route
-                    path={"/marketplace"}
-                    element={
-                      <PrivateRoutes>
-                        <MarketplacePage />
-                      </PrivateRoutes>
-                    }
-                  />
-                  <Route
-                    path={"/assets"}
-                    element={
-                      <PrivateRoutes>
-                        <AssetsPage />
-                      </PrivateRoutes>
-                    }
-                  />
-                  <Route
-                    path={"/asset-onboarding/details"}
-                    element={
-                      <PrivateRoutes>
-                        <AssetOnboadingDetails />
-                      </PrivateRoutes>
-                    }
-                  />
-                  <Route
-                    path={"/asset-onboarding/details/:id"}
-                    element={
-                      <PrivateRoutes>
-                        <AssetOnboadingDetails />
-                      </PrivateRoutes>
-                    }
-                  />
-                  <Route
-                    path={"/assets/:id"}
-                    element={
-                      <PrivateRoutes>
-                        <AssetDetails />
-                      </PrivateRoutes>
-                    }
-                  />
-                  <Route path={STRINGS.BASE_PATH} element={<ContentPage />} />
-                  <Route
-                    path={STRINGS.PROFILE_PATH}
-                    element={
-                      <PrivateRoutes>
-                        <ProfilePage />
-                      </PrivateRoutes>
-                    }
-                  />
-                  <Route
-                    path={STRINGS.EDIT_PROFILE_PATH}
-                    element={
-                      <PrivateRoutes>
-                        <EditProfilePage />
-                      </PrivateRoutes>
-                    }
-                  />
-                </Routes>
-              </AnalyticsWrapper>
-            </div>
+          <Content className="bg-[#fafbfe] text-black h-screen overflow-auto">
+            <>
+              <WalletWarning />
+              <div className={"p-4"}>
+                <AnalyticsWrapper initialized={initialized}>
+                  <Routes>
+                    <Route
+                      path={"/marketplace"}
+                      element={
+                        <PrivateRoutes>
+                          <MarketplacePage />
+                        </PrivateRoutes>
+                      }
+                    />
+                    <Route
+                      path={"/assets"}
+                      element={
+                        <PrivateRoutes>
+                          <AssetsPage />
+                        </PrivateRoutes>
+                      }
+                    />
+                    <Route
+                      path={"/asset-onboarding/details"}
+                      element={
+                        <PrivateRoutes>
+                          <AssetOnboadingDetails />
+                        </PrivateRoutes>
+                      }
+                    />
+                    <Route
+                      path={"/asset-onboarding/details/:id"}
+                      element={
+                        <PrivateRoutes>
+                          <AssetOnboadingDetails />
+                        </PrivateRoutes>
+                      }
+                    />
+                    <Route
+                      path={"/assets/:id"}
+                      element={
+                        <PrivateRoutes>
+                          <AssetDetails />
+                        </PrivateRoutes>
+                      }
+                    />
+                    <Route path={STRINGS.BASE_PATH} element={<ContentPage />} />
+                    <Route
+                      path={STRINGS.PROFILE_PATH}
+                      element={
+                        <PrivateRoutes>
+                          <ProfilePage />
+                        </PrivateRoutes>
+                      }
+                    />
+                    <Route
+                      path={STRINGS.EDIT_PROFILE_PATH}
+                      element={
+                        <PrivateRoutes>
+                          <EditProfilePage />
+                        </PrivateRoutes>
+                      }
+                    />
+                    <Route
+                      path={STRINGS.WALLET_PATH}
+                      element={
+                        <PrivateRoutes>
+                          <WalletPage />
+                        </PrivateRoutes>
+                      }
+                    />
+                  </Routes>
+                </AnalyticsWrapper>
+              </div>
+            </>
           </Content>
         </AntdLayout>
-      </AntdLayout >
+      </AntdLayout>
       <AuthModal />
     </>
   );

@@ -1,5 +1,4 @@
-import { Avatar, Button, Divider, Popover, Tag } from "antd";
-import { FiShoppingCart, FiUploadCloud } from "react-icons/fi";
+import { Avatar, Divider, Popover, Tag } from "antd";
 import { NavLink, useNavigate } from "react-router-dom";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { STRINGS } from "../utils/constants/strings";
@@ -31,7 +30,10 @@ const ProfilePopover = ({ profile }: any) => {
       <NavLink to={STRINGS.PROFILE_PATH}>
         <div className="px-4 py-2 hover:bg-slate-100 text-black">Profile</div>
       </NavLink>
-
+      <Divider dashed />
+      <NavLink to={STRINGS.WALLET_PATH}>
+        <div className="px-4 py-2 hover:bg-slate-100 text-black">Wallet</div>
+      </NavLink>
       <Divider dashed />
       <div className="px-4 py-2 hover:bg-slate-100 cursor-pointer">
         Settings

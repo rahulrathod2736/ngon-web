@@ -8,6 +8,7 @@ export const STRINGS = {
   INVITE_RESTAURANTS_PATH: "/invite-restaurants",
   NEW_ASSET_MODEL_UPLOAD_PATH: "/assets/model/new",
   PROFILE_PATH: "/profile",
+  WALLET_PATH: "/wallet",
   EDIT_PROFILE_PATH: "/profile/edit",
   ASSET_ONBOARDING_PATH: "/asset-onboarding",
   ASSET_ONBOARDING_UPLOAD_PATH: "/asset-onboarding/upload",

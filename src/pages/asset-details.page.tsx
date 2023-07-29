@@ -437,7 +437,7 @@ export const AssetDetails = () => {
         ) : (
           <div>
             <div className="text-xl">
-              {currencyFormatter(assetDetails?.price ?? 0)}
+              {currencyFormatter({ value: assetDetails?.price ?? 0 })}
             </div>
             <div className="mt-2">
               <ul className="list-inside">
