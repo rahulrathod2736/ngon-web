@@ -17,4 +17,7 @@ export const apiRoutes = {
   submitReviews: "/assets/review/:assetId",
   submitComment: "/assets/comment/:assetId",
   followUnfollowUsers: "/users/:userId/follow",
+  sendOtp: "/otp/send",
+  verifyOtp: "/otp/verify",
+  updatePassword: "/users/update-password",
 };
