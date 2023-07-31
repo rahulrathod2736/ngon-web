@@ -11,7 +11,7 @@ export const showSuccessMessage = (msg: string) => {
 };
 
 export const showErrorMessage = (err: any) => {
-  message.error(err.message);
+  message.error(err?.response?.data?.message ?? err.message);
 };
 
 export const capitalizeSentence = (sentence: string) => {

@@ -48,6 +48,13 @@ export const LoginPage = ({
       dispatch(openGlobalModal("register"));
     }
   };
+  const handleForgotPassword = () => {
+    if (isFullScreen) {
+      navigate("/forgot-password");
+    } else {
+      dispatch(openGlobalModal("forgot-password"));
+    }
+  };
 
   const { values, handleChange, errors, handleSubmit } = useFormik({
     initialValues: {
@@ -115,8 +122,11 @@ export const LoginPage = ({
               Login
             </Button>
           </Form>
-          <div className="text-right m-4">
-            <span className="link" onClick={handleCreateAccount}>
+          <div className="flex justify-between m-4">
+            <span className="link text-sm" onClick={handleForgotPassword}>
+              Forgot Password??
+            </span>
+            <span className="link text-sm" onClick={handleCreateAccount}>
               Create an account
             </span>
           </div>

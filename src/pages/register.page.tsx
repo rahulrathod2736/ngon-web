@@ -60,7 +60,7 @@ export const RegisterPage = ({
       password: Yup.string().required("Password is required"),
       confirmPassword: Yup.string()
         .required("Confirm Password")
-        .oneOf([Yup.ref("password")], "Password must match"),
+        .oneOf([Yup.ref("password")], "Password must match"), 
     }),
     onSubmit: (values) => {
       dispatch(registerUser(values));
