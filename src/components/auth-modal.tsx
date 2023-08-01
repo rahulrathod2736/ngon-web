@@ -4,6 +4,7 @@ import { LoginPage } from "../pages/login.page";
 import { closeGlobalModal } from "../redux/authReducer";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { RegisterPage } from "../pages/register.page";
+import { ForgotPasswordPage } from "../pages/forgot-password.page";
 
 export const AuthModal = () => {
   const { authModal = "" } = useAppSelector(
@@ -22,6 +23,8 @@ export const AuthModal = () => {
         return <LoginPage isFullScreen={false} />;
       case "register":
         return <RegisterPage isFullScreen={false} />;
+      case "forgot-password":
+        return <ForgotPasswordPage isFullScreen={false} />;
       default:
         return <></>;
     }
@@ -30,7 +33,11 @@ export const AuthModal = () => {
   return (
     <>
       <Modal
-        open={authModal === "login" || authModal === "register"}
+        open={
+          authModal === "login" ||
+          authModal === "register" ||
+          authModal === "forgot-password"
+        }
         onCancel={() => {
           dispatch(closeGlobalModal());
         }}

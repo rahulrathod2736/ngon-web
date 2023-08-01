@@ -20,5 +20,8 @@ export const apiRoutes = {
   getUserWallet: "/wallet",
   getUserWalletTransactions: "/wallet/transactions",
   addMoneyToWalletRequest: "/wallet/add-money",
-  initializeWallet: "/wallet/initialize"
+  initializeWallet: "/wallet/initialize",
+  sendOtp: "/otp/send",
+  verifyOtp: "/otp/verify",
+  updatePassword: "/users/update-password",
 };
