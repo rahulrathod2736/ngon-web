@@ -24,7 +24,7 @@ export const WalletWarning = () => {
     return (
       <div
         className={
-          "flex text-center text-[12px] p-1 bg-red-50 text-red-500 items-center justify-center relative"
+          "flex text-center text-[12px] p-1 bg-red-50 text-red-500 items-center justify-center z-[5]"
         }
       >
         Heyy, Still you haven't created Wallet. Create a wallet and monetize
@@ -39,6 +39,6 @@ export const WalletWarning = () => {
       </div>
     );
   }
-  
+
   return <></>;
 };

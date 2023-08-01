@@ -117,9 +117,9 @@ export const HomePage = () => {
         <AntdHeader className="!bg-white fixed z-[1000] w-screen">
           <Header />
         </AntdHeader>
-        <Content className="content bg-[#fafbfe] p-4 text-black overflow-auto !mt-16">
-          <div>
-            <WalletWarning />
+        <Content className="content bg-[#fafbfe] !mt-16">
+          <WalletWarning />
+          <div className="p-4 text-black overflow-auto">
             <AnalyticsWrapper initialized={initialized}>
               <Routes>
                 <Route

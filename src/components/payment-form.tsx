@@ -1,11 +1,10 @@
-import TooltipInputField from "./tooltipInputField/tooltipInputField";
-import { Form, Input, InputNumber } from "antd";
-import React from "react";
+import { Form, Input, InputNumber, Button } from "antd";
 import {
   getCurrencySymbol,
   numberFormatter,
   parseLocaleNumber,
 } from "../utils/functions";
+import TooltipInputField from "./tooltipInputField/tooltipInputField";
 
 export const PaymentForm = ({
   values,
@@ -20,16 +19,29 @@ export const PaymentForm = ({
   errors: any;
   type: "upi" | "paypal";
 }) => {
+  const openPaypalTab = () => {
+    if (import.meta.env.VITE_PAYPAL_ID) {
+      window.open(import.meta.env.VITE_PAYPAL_ID, "_blank", "noreferrer");
+    }
+  };
   return (
     <div className={""}>
-      <div className={"flex flex-row gap-4"}>
-        <img
-          src={
-            "https://goqr.me/_Resources/Static/Packages/GoQrMe.Ui/Images/qr_default.png"
-          }
-          className={"aspect-square w-40"}
-          loading={"lazy"}
-        />
+      <div className={`flex gap-4 ${type === "upi" ? "flex-row" : "flex-col"}`}>
+        {type === "upi" ? (
+          import.meta.env.VITE_UPI_ID ? (
+            <img
+              src={import.meta.env.VITE_UPI_ID}
+              className={"aspect-square w-40"}
+              loading={"lazy"}
+            />
+          ) : (
+            <></>
+          )
+        ) : (
+          <Button shape="round" type="dashed" onClick={openPaypalTab}>
+            Pay Using Paypal
+          </Button>
+        )}
         <div className={"flex flex-col flex-1"}>
           <Form layout={"vertical"}>
             <Form.Item
