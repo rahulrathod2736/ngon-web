@@ -41,7 +41,6 @@ export const currencyFormatter = ({
 };
 
 export const numberFormatter = ({ value }: { value: number }) => {
-  console.log(value);
   return new Intl.NumberFormat("en-US", {
     minimumFractionDigits: 0,
   }).format(value);
