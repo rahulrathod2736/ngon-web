@@ -35,7 +35,7 @@ export const Transactions = ({
       const resp = await axiosInstance.get(
         `${apiRoutes.getUserWalletTransactions}?${query}`
       );
-      setTransactions(resp?.data?.data || []);
+      setTransactions(resp?.data?.data?.items || []);
       setLoading(false);
     } catch (error) {
       setLoading(false);
